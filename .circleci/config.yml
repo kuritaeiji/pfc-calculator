@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  heroku: circleci/heroku@1.2.6
+
 jobs:
   build_and_test:
     docker:
@@ -15,11 +18,26 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run: yarn test
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git
+
 
 workflows:
   build-deploy:
     jobs:
       - build_and_test
+      - deploy:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: master
 
 # リストアキャッシュでyarn.lockを復元して現在のyarn.lockと変わらないならyarn installを省き、変化してた場合のみyarn installする
 # 最後にsave_cacheでyarn.lockをキャッシュして次回のジョブ実行時に差分比較できるようにする
+
+# herokuへデプロイするにはapi_keyとアプリ名をcircleciの環境変数に登録する必要がある。
