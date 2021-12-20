@@ -9,3 +9,16 @@ WORKDIR /app
 # ここまで書いたらコンテナを起動して、
 # globalにcreate-nuxt-appパッケージを追加し、
 # yarn create nuxt-app --overwrite-dir . コマンドでnuxtを導入
+
+
+# ここからはherokuのデプロイ設定
+COPY ./package.json /app
+RUN yarn install
+
+COPY . /app
+RUN yarn build
+
+# ローカル側のpackage.jsonをherokuのコンテナ内にコピーし、
+# yarn installコマンドでnode_moduleをインストールし、
+# ローカル側のコードを全てherokuのコンテナにコピーし、
+# yarn buildでhtmlやjsファイルなどをビルドする
