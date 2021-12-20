@@ -5,7 +5,7 @@
 
       <v-app-bar-title class="grey--text font-weight-bold text-h5 cp">
         <nuxt-link to="/" tag="div">
-          PFC計算機
+          {{ $t('title.index') }}
         </nuxt-link>
       </v-app-bar-title>
 

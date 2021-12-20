@@ -39,7 +39,16 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/i18n'
   ],
+
+  i18n: {
+    locales: [{ code: 'ja', file: 'ja.json' }],
+    defaultLocale: 'ja',
+    langDir: 'locales/',
+    strategy: 'no_prefix',
+    lazy: true
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
