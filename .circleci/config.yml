@@ -1,0 +1,25 @@
+version: 2.1
+
+jobs:
+  build_and_test:
+    docker:
+      - image: node:14
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn test
+
+workflows:
+  build-deploy:
+    jobs:
+      - build_and_test
+
+# リストアキャッシュでyarn.lockを復元して現在のyarn.lockと変わらないならyarn installを省き、変化してた場合のみyarn installする
+# 最後にsave_cacheでyarn.lockをキャッシュして次回のジョブ実行時に差分比較できるようにする
