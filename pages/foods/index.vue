@@ -6,7 +6,7 @@
 export default {
   head () {
     return {
-      title: this.$t('title.index')
+      title: this.$t('title.foods.index')
     }
   }
 }

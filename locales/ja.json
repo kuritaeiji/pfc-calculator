@@ -1,5 +1,8 @@
 {
   "title": {
-    "index": "PFC計算機"
+    "index": "PFC計算機",
+    "foods": {
+      "index": "食材・料理一覧"
+    }
   }
 }

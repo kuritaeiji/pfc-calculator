@@ -1,8 +1,6 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: 'pfc-calculator',
-    title: 'pfc-calculator',
     htmlAttrs: {
       lang: 'ja'
     },
