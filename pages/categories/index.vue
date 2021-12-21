@@ -18,12 +18,16 @@
 
       <v-card-actions>
         <edit-dialog @openDialog="openEditDialog(category)" @update="updateCategoryTemplate">
-          <v-text-field v-model="updatingCategory.name" :label="$t('model.category.name')" />
+          <v-text-field v-model="updatingCategory.name" autofocus :label="$t('model.category.name')" />
         </edit-dialog>
 
         <delete-dialog @delete="removeCategoryTemplate(category)" />
       </v-card-actions>
     </v-card>
+
+    <create-dialog @closeDialog="closeCreateDialog" @add="addCategoryTemplate">
+      <v-text-field v-model="newCategory.name" autofocus :label="$t('model.category.name')" />
+    </create-dialog>
   </v-container>
 </template>
 
@@ -34,9 +38,11 @@ export default {
   data () {
     return {
       title: this.$t('title.categories.index'),
-      dialog: false,
       updatingCategory: {
         id: null,
+        name: ''
+      },
+      newCategory: {
         name: ''
       }
     }
@@ -48,17 +54,23 @@ export default {
   },
   computed: mapGetters('category', ['categories']),
   methods: {
-    ...mapActions('category', ['removeCategory', 'updateCategory']),
+    ...mapActions('category', ['addCategory', 'removeCategory', 'updateCategory']),
+    addCategoryTemplate () {
+      this.addCategory({ category: this.newCategory })
+      this.closeCreateDialog()
+    },
     removeCategoryTemplate (category) {
       this.removeCategory({ category })
     },
     updateCategoryTemplate () {
       this.updateCategory({ category: this.updatingCategory })
-      this.dialog = false
     },
     openEditDialog (category) {
       this.updatingCategory = { ...this.updatingCategory, ...category }
       this.dialog = true
+    },
+    closeCreateDialog () {
+      this.newCategory.name = ''
     }
   }
 }
