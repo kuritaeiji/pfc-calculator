@@ -7,35 +7,32 @@ describe('components/CreateDialog.vue', () => {
   let localVue
   let vuetify
 
-  describe('template', () => {
-    let _CreateDialog
+  let _CreateDialog
 
-    beforeEach(() => {
-      localVue = createLocalVue()
-      vuetify = new Vuetify()
-
-      const App = localVue.component('App', {
-        components: { CreateDialog },
-        template: `
-          <v-app>
-            <create-dialog />
-          </v-app>
-        `
-      })
-
-      const elem = document.createElement('div')
-      if (document.body) {
-        document.body.appendChild(elem)
-      }
-
-      wrapper = mount(App, {
-        localVue,
-        vuetify,
-        attachTo: elem
-      })
-      _CreateDialog = wrapper.findComponent(CreateDialog)
+  beforeEach(() => {
+    localVue = createLocalVue()
+    vuetify = new Vuetify()
+    const App = localVue.component('App', {
+      components: { CreateDialog },
+      template: `
+        <v-app>
+          <create-dialog />
+        </v-app>
+      `
     })
+    const elem = document.createElement('div')
+    if (document.body) {
+      document.body.appendChild(elem)
+    }
+    wrapper = mount(App, {
+      localVue,
+      vuetify,
+      attachTo: elem
+    })
+    _CreateDialog = wrapper.findComponent(CreateDialog)
+  })
 
+  describe('template', () => {
     // it('ダイアログの外側をクリックするとcloseDialogが呼び出される', () => {
     //   const mock = jest.fn()
     //   _CreateDialog.vm.closeDialog = mock
@@ -54,41 +51,57 @@ describe('components/CreateDialog.vue', () => {
   })
 
   describe('script', () => {
-    beforeEach(() => {
-      localVue = createLocalVue()
-      vuetify = new Vuetify()
-      wrapper = mount(CreateDialog, {
-        localVue,
-        vuetify
-      })
-    })
-
     it('dataの構造が正しい', () => {
-      expect(wrapper.vm.$data).toHaveProperty('dialog')
+      expect(_CreateDialog.vm.$data).toHaveProperty('dialog')
     })
 
     describe('methods', () => {
       let mock
       beforeEach(() => {
         mock = jest.fn()
-        wrapper.vm.$emit = mock
+        _CreateDialog.vm.$emit = mock
       })
 
       it('closeDialog', () => {
-        wrapper.vm.closeDialog()
+        _CreateDialog.vm.closeDialog()
         expect(mock).toHaveBeenCalledWith('closeDialog')
       })
 
       describe('add', () => {
-        it('dialogをfalseにする', () => {
-          wrapper.vm.dialog = true
-          wrapper.vm.add()
-          expect(wrapper.vm.dialog).toEqual(false)
+        beforeEach(async () => {
+          _CreateDialog.find('.v-btn').trigger('click')
+          await _CreateDialog.vm.$nextTick()
         })
 
-        it('addをemitする', () => {
-          wrapper.vm.add()
-          expect(mock).toHaveBeenCalledWith('add')
+        describe('validationがtrueの時', () => {
+          beforeEach(() => {
+            const stub = jest.fn(() => true)
+            _CreateDialog.findComponent({ ref: 'form' }).vm.validate = stub
+          })
+
+          it('dialogをfalseにする', () => {
+            _CreateDialog.vm.dialog = true
+            _CreateDialog.vm.add()
+            expect(_CreateDialog.vm.dialog).toEqual(false)
+          })
+
+          it('addをemitする', () => {
+            _CreateDialog.vm.add()
+            expect(mock).toHaveBeenCalledWith('add')
+          })
+        })
+
+        describe('validationがfalseの時', () => {
+          it('何もしない', () => {
+            const stub = jest.fn(() => false)
+            _CreateDialog.findComponent({ ref: 'form' }).vm.validate = stub
+            _CreateDialog.vm.dialog = true
+            const mock = jest.fn()
+            _CreateDialog.vm.$emit = mock
+            _CreateDialog.vm.add()
+            expect(_CreateDialog.vm.dialog).toEqual(true)
+            expect(mock).not.toHaveBeenCalled()
+          })
         })
       })
     })

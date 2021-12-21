@@ -18,7 +18,7 @@
 
       <v-card-actions>
         <edit-dialog @openDialog="openEditDialog(category)" @update="updateCategoryTemplate">
-          <v-text-field v-model="updatingCategory.name" autofocus :label="$t('model.category.name')" />
+          <v-text-field v-model="updatingCategory.name" autofocus :label="$t('model.category.name')" :rules="rules" />
         </edit-dialog>
 
         <delete-dialog @delete="removeCategoryTemplate(category)" />
@@ -26,13 +26,14 @@
     </v-card>
 
     <create-dialog @closeDialog="closeCreateDialog" @add="addCategoryTemplate">
-      <v-text-field v-model="newCategory.name" autofocus :label="$t('model.category.name')" />
+      <v-text-field v-model="newCategory.name" autofocus :label="$t('model.category.name')" :rules="rules" />
     </create-dialog>
   </v-container>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { required, shorter } from '@/validators/validators'
 
 export default {
   data () {
@@ -44,7 +45,11 @@ export default {
       },
       newCategory: {
         name: ''
-      }
+      },
+      rules: [
+        required,
+        shorter(20)
+      ]
     }
   },
   head () {

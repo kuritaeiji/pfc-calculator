@@ -6,7 +6,7 @@
 
     <v-dialog v-model="dialog" max-width="700">
       <v-card flat tile class="pa-4">
-        <v-form ref="editForm" @submit.prevent>
+        <v-form ref="form" @submit.prevent>
           <slot />
           <v-btn block color="primary" @click="update">
             更新
@@ -30,7 +30,9 @@ export default {
       this.$emit('openDialog')
     },
     update () {
-      this.$emit('update')
+      if (this.$refs.form.validate()) {
+        this.$emit('update')
+      }
     }
   }
 }

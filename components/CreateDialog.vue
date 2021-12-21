@@ -19,7 +19,7 @@
     </template>
 
     <v-card flat tile class="pa-4" @submit.prevent>
-      <v-form ref="createForm">
+      <v-form ref="form">
         <slot />
         <v-btn block color="primary" @click="add">
           追加
@@ -41,8 +41,10 @@ export default {
       this.$emit('closeDialog')
     },
     add () {
-      this.dialog = false
-      this.$emit('add')
+      if (this.$refs.form.validate()) {
+        this.dialog = false
+        this.$emit('add')
+      }
     }
   }
 }
