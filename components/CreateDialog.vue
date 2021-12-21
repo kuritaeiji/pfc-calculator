@@ -5,6 +5,7 @@
         large
         depressed
         dark
+        max-width="700"
         color="light-blue lighten-2"
         class="font-weight-bold"
         v-bind="attrs"
@@ -17,7 +18,7 @@
       </v-btn>
     </template>
 
-    <v-card flat tile max-width="700" class="pa-4" @submit.prevent>
+    <v-card flat tile class="pa-4" @submit.prevent>
       <v-form ref="createForm">
         <slot />
         <v-btn block color="primary" @click="add">
