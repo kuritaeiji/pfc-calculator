@@ -23,8 +23,9 @@ export const actions = {
     const index = getters.categoryIndexById(payload.category.id)
     commit('removeCategory', { index })
   },
-  updateCategory ({ commit }, payload) {
-    const index = getters.categoryIndexById(payload.catetgory.id)
+  updateCategory ({ commit, getters }, payload) {
+    const index = getters.categoryIndexById(payload.category.id)
+    debugger
     commit('updateCategory', { ...payload, index })
   }
 }

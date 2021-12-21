@@ -3,6 +3,14 @@
     "index": "PFC計算機",
     "foods": {
       "index": "食材・料理一覧"
+    },
+    "categories": {
+      "index": "カテゴリー一覧"
+    }
+  },
+  "model": {
+    "category": {
+      "name": "カテゴリー名"
     }
   }
 }

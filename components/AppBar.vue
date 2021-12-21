@@ -49,6 +49,7 @@ export default {
       drawer: false,
       date: '2020-12-11',
       navigations: [
+        { text: this.$t('title.categories.index'), to: '/categories' },
         { text: this.$t('title.foods.index'), to: '/foods' }
       ]
     }
