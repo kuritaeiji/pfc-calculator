@@ -54,7 +54,11 @@ export default {
         required,
         shorter(20)
       ],
-      isDragging: false
+      isDragging: false,
+      dragOptions: {
+        animation: 200,
+        delay: 50
+      }
     }
   },
   head () {
@@ -69,12 +73,6 @@ export default {
       },
       set (value) {
         this.setCategories({ categories: value })
-      }
-    },
-    dragOptions () {
-      return {
-        animation: 200,
-        delay: 50
       }
     },
     dragClass () {
