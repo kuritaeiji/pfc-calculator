@@ -17,3 +17,15 @@ export const getters = {
     }
   }
 }
+
+export const actions = {
+  sortFoods ({ commit }, payload) {
+    commit('sortFoods', payload)
+  }
+}
+
+export const mutations = {
+  sortFoods (state, { oldIndex, newIndex }) {
+    [state.foods[oldIndex], state.foods[newIndex]] = [state.foods[newIndex], state.foods[oldIndex]]
+  }
+}

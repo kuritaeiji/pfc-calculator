@@ -8,16 +8,20 @@
       </v-tab>
     </v-tabs>
 
-    <v-card v-for="food of filteredFoods(tab)" :key="food.id" flat tile max-width="700">
-      {{ food.name }}
-    </v-card>
+    <draggable @end="onEnd">
+      <v-card v-for="food of filteredFoods(tab)" :key="food.id" flat tile max-width="700">
+        {{ food.name }}
+      </v-card>
+    </draggable>
   </v-container>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import draggable from 'vuedraggable'
 
 export default {
+  components: { draggable },
   asyncData ({ store }) {
     const categories = store.getters['category/categories']
     return { tab: categories[0].id, categories }
@@ -34,8 +38,12 @@ export default {
   },
   computed: mapGetters('food', ['filteredFoods']),
   methods: {
+    ...mapActions('food', ['sortFoods']),
     changeTab (category) {
       this.tab = category.id
+    },
+    onEnd (event) {
+      this.sortFoods({ oldIndex: event.oldIndex, newIndex: event.newIndex })
     }
   }
 }
