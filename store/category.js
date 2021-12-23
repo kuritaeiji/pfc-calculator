@@ -26,6 +26,9 @@ export const actions = {
   updateCategory ({ commit, getters }, payload) {
     const index = getters.categoryIndexById(payload.category.id)
     commit('updateCategory', { ...payload, index })
+  },
+  setCategories ({ commit }, payload) {
+    commit('setCategories', payload)
   }
 }
 
@@ -38,5 +41,8 @@ export const mutations = {
   },
   updateCategory (state, { category, index }) {
     state.categories.splice(index, 1, category)
+  },
+  setCategories (state, { categories }) {
+    state.categories = categories
   }
 }

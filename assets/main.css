@@ -1,3 +1,11 @@
 .cp {
   cursor: pointer;
 }
+
+.cgrab {
+  cursor: grab;
+}
+
+.cgrabbing {
+  cursor: grabbing;
+}
