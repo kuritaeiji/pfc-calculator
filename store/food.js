@@ -15,17 +15,29 @@ export const getters = {
     return (categoryId) => {
       return state.foods.filter(f => f.categoryId === categoryId)
     }
+  },
+  foodIndexById (state) {
+    return (id) => {
+      return state.foods.findIndex(f => f.id === id)
+    }
   }
 }
 
 export const actions = {
   sortFoods ({ commit }, payload) {
     commit('sortFoods', payload)
+  },
+  updateFood ({ commit, getters }, payload) {
+    const index = getters.foodIndexById(payload.food.id)
+    commit('updateFood', { food: payload.food, index })
   }
 }
 
 export const mutations = {
   sortFoods (state, { oldIndex, newIndex }) {
     [state.foods[oldIndex], state.foods[newIndex]] = [state.foods[newIndex], state.foods[oldIndex]]
+  },
+  updateFood (state, { food, index }) {
+    state.foods.splice(index, 1, food)
   }
 }
