@@ -8,13 +8,9 @@ export const state = () => ({
 })
 
 export const getters = {
-  foods (state) {
-    return state.foods
-  },
-  filteredFoods (state) {
-    return (categoryId) => {
-      return state.foods.filter(f => f.categoryId === categoryId)
-    }
+  filteredFoods (state, getters, rootState, rootGetters) {
+    const currentTab = rootGetters['category/currentTab']
+    return state.foods.filter(f => f.categoryId === currentTab)
   },
   foodIndexById (state) {
     return (id) => {
@@ -54,7 +50,7 @@ export const mutations = {
     state.foods.splice(index, 1)
   },
   addFood (state, { food }) {
-    state.foods.push(food)
+    state.foods.push({ ...food, id: ++state.currentId })
   },
   removedCategory (state, { category }) {
     state.foods = state.foods.filter(food => food.categoryId !== category.id)

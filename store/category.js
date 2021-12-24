@@ -3,7 +3,8 @@ export const state = () => ({
     { id: 1, title: '主食' },
     { id: 2, title: '肉類' }
   ],
-  currentId: 2
+  currentId: 2,
+  currentTab: 1
 })
 
 export const getters = {
@@ -12,6 +13,9 @@ export const getters = {
   },
   categoryIndexById (state) {
     return id => state.categories.findIndex(c => c.id === id)
+  },
+  currentTab (state) {
+    return state.currentTab
   }
 }
 
@@ -33,6 +37,9 @@ export const actions = {
   setCategories ({ commit }, payload) {
     commit('setCategories', payload)
   },
+  setCurrentTab ({ commit }, payload) {
+    commit('setCurrentTab', payload)
+  },
   notifyObservers ({ dispatch }, payload) {
     observers.forEach(observer => dispatch(`${observer}/removedCategory`, payload, { root: true }))
   }
@@ -50,5 +57,8 @@ export const mutations = {
   },
   setCategories (state, { categories }) {
     state.categories = categories
+  },
+  setCurrentTab (state, { category }) {
+    state.currentTab = category.id
   }
 }

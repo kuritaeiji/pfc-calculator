@@ -3,14 +3,14 @@
     <sub-header :title="title" />
 
     <v-tabs background-color="grey lighten-4" class="mb-4">
-      <v-tab v-for="category of categories" :key="category.id" @click="changeTab(category)">
+      <v-tab v-for="category of categories" :key="category.id" @click="setCurrentTabTemplate(category)">
         {{ category.title }}
       </v-tab>
     </v-tabs>
 
     <draggable v-bind="dragOptions" :class="dragClass" @start="onStart" @end="onEnd">
       <v-card
-        v-for="food of filteredFoods(tab)"
+        v-for="food of filteredFoods"
         :key="food.id"
         flat
         tile
@@ -70,7 +70,8 @@ export default {
     const defaultCategoryId = categories[0].id
     const newFood = { ...defaultFood, categoryId: defaultCategoryId }
     const updatingFood = { id: 0, ...defaultFood, categoryId: defaultCategoryId }
-    return { tab: categories[0].id, categories, selectItems, newFood, updatingFood, defaultCategoryId }
+    store.dispatch('category/setCurentTab', { category: categories[0] })
+    return { categories, selectItems, newFood, updatingFood, defaultCategoryId }
   },
   data () {
     return {
@@ -90,6 +91,7 @@ export default {
   },
   methods: {
     ...mapActions('food', ['sortFoods', 'addFood', 'updateFood', 'removeFood']),
+    ...mapActions('category', ['setCurrentTab']),
     changeTab (category) {
       this.tab = category.id
     },
@@ -112,6 +114,9 @@ export default {
     addFoodTemplate () {
       this.addFood({ food: this.newFood })
       this.newFood = this.defaultNewFood
+    },
+    setCurrentTabTemplate (category) {
+      this.setCurrentTab({ category })
     }
   }
 }
