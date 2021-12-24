@@ -1,5 +1,26 @@
 {
   "title": {
-    "index": "PFC計算機"
+    "index": "PFC計算機",
+    "foods": {
+      "index": "食材・料理一覧"
+    },
+    "categories": {
+      "index": "カテゴリー一覧"
+    }
+  },
+  "model": {
+    "category": {
+      "title": "カテゴリー名"
+    },
+    "food": {
+      "title": "食材・料理名",
+      "categoryId": "カテゴリー",
+      "per": "単位量当たり",
+      "unit": "単位",
+      "calory": "カロリー(kcal)",
+      "protein": "タンパク質(g)",
+      "fat": "脂質(g)",
+      "carbonhydrate": "炭水化物(g)"
+    }
   }
 }

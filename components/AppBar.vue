@@ -21,6 +21,7 @@
           </v-btn>
         </template>
         <v-date-picker
+          v-model="date"
           locale="ja-jp"
           first-day-of-week="1"
           :day-format="(d) => new Date(d).getDate()"
@@ -29,8 +30,14 @@
       </v-menu>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app hide-overlay>
-      ppp
+    <v-navigation-drawer v-model="drawer" app hide-overlay dark color="indigo darken-1">
+      <v-list>
+        <v-list-item v-for="nav of navigations" :key="nav.text" :to="nav.to" class="text-subtitle-1 font-weight-bold">
+          <v-list-item-title>
+            {{ nav.text }}
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
   </div>
 </template>
@@ -39,7 +46,12 @@
 export default {
   data () {
     return {
-      drawer: false
+      drawer: false,
+      date: '2020-12-11',
+      navigations: [
+        { text: this.$t('title.categories.index'), to: '/categories' },
+        { text: this.$t('title.foods.index'), to: '/foods' }
+      ]
     }
   },
   methods: {
