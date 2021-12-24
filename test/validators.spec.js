@@ -1,4 +1,4 @@
-import { required, shorter } from '@/validators/validators'
+import { required, shorter, select } from '@/validators/validators'
 
 describe('validators', () => {
   describe('required', () => {
@@ -20,6 +20,22 @@ describe('validators', () => {
 
     it('10文字より大きい時、エラーメッセージを返す', () => {
       expect(validation('01234567890')).toEqual('10文字以内で入力して下さい')
+    })
+  })
+
+  describe('select', () => {
+    const selectItems = [
+      { text: 'test1', value: 1 },
+      { text: 'test2', value: 2 }
+    ]
+    const validation = select(selectItems)
+
+    it('selectItemsのvalueである場合、trueを返す', () => {
+      expect(validation(2)).toEqual(true)
+    })
+
+    it('selectItemsのvalueでない場合、エラーメッセージを返す', () => {
+      expect(validation(3)).toEqual('不正な値です')
     })
   })
 })
