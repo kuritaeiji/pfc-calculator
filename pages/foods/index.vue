@@ -35,7 +35,7 @@
             <v-text-field v-model.number="updatingFood.c" :label="$t('model.food.c')" />
           </edit-dialog>
 
-          <delete-dialog />
+          <delete-dialog @delete="removeFoodTemplate(food)" />
         </v-card-actions>
       </v-card>
     </draggable>
@@ -83,7 +83,7 @@ export default {
   },
   computed: mapGetters('food', ['filteredFoods']),
   methods: {
-    ...mapActions('food', ['sortFoods', 'updateFood']),
+    ...mapActions('food', ['sortFoods', 'updateFood', 'removeFood']),
     changeTab (category) {
       this.tab = category.id
     },
@@ -96,6 +96,9 @@ export default {
     },
     updateFoodTemplate () {
       this.updateFood({ food: this.updatingFood })
+    },
+    removeFoodTemplate (food) {
+      this.removeFood({ food })
     }
   }
 }

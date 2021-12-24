@@ -30,6 +30,10 @@ export const actions = {
   updateFood ({ commit, getters }, payload) {
     const index = getters.foodIndexById(payload.food.id)
     commit('updateFood', { food: payload.food, index })
+  },
+  removeFood ({ commit, getters }, payload) {
+    const index = getters.foodIndexById(payload.food.id)
+    commit('removeFood', { index })
   }
 }
 
@@ -39,5 +43,8 @@ export const mutations = {
   },
   updateFood (state, { food, index }) {
     state.foods.splice(index, 1, food)
+  },
+  removeFood (state, { index }) {
+    state.foods.splice(index, 1)
   }
 }
