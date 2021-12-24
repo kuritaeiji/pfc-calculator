@@ -1,7 +1,7 @@
 export const state = () => ({
   categories: [
-    { id: 1, name: '主食' },
-    { id: 2, name: '肉類' }
+    { id: 1, title: '主食' },
+    { id: 2, title: '肉類' }
   ],
   currentId: 2
 })

@@ -10,7 +10,7 @@
   },
   "model": {
     "category": {
-      "name": "カテゴリー名"
+      "title": "カテゴリー名"
     },
     "food": {
       "title": "食材・料理名",

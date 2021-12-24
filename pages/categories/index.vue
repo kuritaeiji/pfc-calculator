@@ -12,14 +12,14 @@
         class="d-flex mb-3"
       >
         <v-card-title class="text-subtitle-1 font-weight-bold grey--text text-truncate">
-          {{ category.name }}
+          {{ category.title }}
         </v-card-title>
 
         <v-spacer />
 
         <v-card-actions>
           <edit-dialog @openDialog="openEditDialog(category)" @update="updateCategoryTemplate">
-            <v-text-field v-model="updatingCategory.name" autofocus :label="$t('model.category.name')" :rules="rules" />
+            <v-text-field v-model="updatingCategory.title" autofocus :label="$t('model.category.title')" :rules="rules" />
           </edit-dialog>
 
           <delete-dialog @delete="removeCategoryTemplate(category)" />
@@ -28,7 +28,7 @@
     </draggable>
 
     <create-dialog @closeDialog="closeCreateDialog" @add="addCategoryTemplate">
-      <v-text-field v-model="newCategory.name" autofocus :label="$t('model.category.name')" :rules="rules" />
+      <v-text-field v-model="newCategory.title" autofocus :label="$t('model.category.title')" :rules="rules" />
     </create-dialog>
   </v-container>
 </template>
@@ -47,10 +47,10 @@ export default {
       title: this.$t('title.categories.index'),
       updatingCategory: {
         id: null,
-        name: ''
+        title: ''
       },
       newCategory: {
-        name: ''
+        title: ''
       },
       rules: [
         required,
@@ -90,7 +90,7 @@ export default {
       this.dialog = true
     },
     closeCreateDialog () {
-      this.newCategory.name = ''
+      this.newCategory.title = ''
     }
   }
 }
