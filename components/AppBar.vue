@@ -25,6 +25,7 @@
           locale="ja-jp"
           first-day-of-week="1"
           :day-format="(d) => new Date(d).getDate()"
+          :max="today"
           @change="change"
         />
       </v-menu>
@@ -47,11 +48,17 @@ export default {
   data () {
     return {
       drawer: false,
-      date: '2020-12-11',
+      date: this.$utils.formatDate(new Date()),
+      today: this.$utils.formatDate(new Date()),
       navigations: [
         { text: this.$t('title.categories.index'), to: '/categories' },
         { text: this.$t('title.foods.index'), to: '/foods' }
       ]
+    }
+  },
+  watch: {
+    date (newDate) {
+      this.$router.push(`/dates/${newDate}`)
     }
   },
   methods: {

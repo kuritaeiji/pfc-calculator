@@ -70,7 +70,7 @@ export default {
     const defaultCategoryId = categories[0].id
     const newFood = { ...defaultFood, categoryId: defaultCategoryId }
     const updatingFood = { id: 0, ...defaultFood, categoryId: defaultCategoryId }
-    store.dispatch('category/setCurentTab', { category: categories[0] })
+    store.dispatch('category/setCurrentTab', { category: categories[0] })
     return { categories, selectItems, newFood, updatingFood, defaultCategoryId }
   },
   data () {

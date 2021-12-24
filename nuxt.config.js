@@ -22,6 +22,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/utils.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -32,13 +33,18 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/moment'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/i18n'
   ],
+
+  moment: {
+    locales: ['ja']
+  },
 
   i18n: {
     locales: [{ code: 'ja', file: 'ja.json' }],
