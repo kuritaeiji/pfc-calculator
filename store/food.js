@@ -1,8 +1,8 @@
 export const state = () => ({
   foods: [
-    { id: 1, name: '米', per: 1, unit: '合', calory: 534, p: 9.15, f: 1.35, c: 116.65, categoryId: 1 },
-    { id: 2, name: 'パスタ', per: 1, unit: '人前', calory: 340, p: 11.7, f: 1.98, c: 64.98, categoryId: 1 },
-    { id: 3, name: '鶏胸肉', per: 100, unit: 'g', calory: 191, p: 19.5, f: 11.6, c: 0, categoryId: 2 }
+    { id: 1, title: '米', per: 1, unit: '合', calory: 534, protein: 9.15, fat: 1.35, carbonhydrate: 116.65, categoryId: 1 },
+    { id: 2, title: 'パスタ', per: 1, unit: '人前', calory: 340, protein: 11.7, fat: 1.98, carbonhydrate: 64.98, categoryId: 1 },
+    { id: 3, title: '鶏胸肉', per: 100, unit: 'g', calory: 191, protein: 19.5, fat: 11.6, carbonhydrate: 0, categoryId: 2 }
   ],
   currentId: 3
 })
@@ -34,6 +34,9 @@ export const actions = {
   removeFood ({ commit, getters }, payload) {
     const index = getters.foodIndexById(payload.food.id)
     commit('removeFood', { index })
+  },
+  addFood ({ commit }, payload) {
+    commit('addFood', payload)
   }
 }
 
@@ -46,5 +49,8 @@ export const mutations = {
   },
   removeFood (state, { index }) {
     state.foods.splice(index, 1)
+  },
+  addFood (state, { food }) {
+    state.foods.push(food)
   }
 }
