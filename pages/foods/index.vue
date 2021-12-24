@@ -4,7 +4,7 @@
 
     <v-tabs background-color="grey lighten-4" class="mb-4">
       <v-tab v-for="category of categories" :key="category.id" @click="changeTab(category)">
-        {{ category.name }}
+        {{ category.title }}
       </v-tab>
     </v-tabs>
 

@@ -37,6 +37,9 @@ export const actions = {
   },
   addFood ({ commit }, payload) {
     commit('addFood', payload)
+  },
+  removedCategory ({ commit }, payload) {
+    commit('removedCategory', payload)
   }
 }
 
@@ -52,5 +55,8 @@ export const mutations = {
   },
   addFood (state, { food }) {
     state.foods.push(food)
+  },
+  removedCategory (state, { category }) {
+    state.foods = state.foods.filter(food => food.categoryId !== category.id)
   }
 }

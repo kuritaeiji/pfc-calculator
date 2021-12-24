@@ -15,12 +15,15 @@ export const getters = {
   }
 }
 
+const observers = ['food']
+
 export const actions = {
   addCategory ({ commit }, payload) {
     commit('addCategory', payload)
   },
-  removeCategory ({ commit, getters }, payload) {
+  removeCategory ({ commit, getters, dispatch }, payload) {
     const index = getters.categoryIndexById(payload.category.id)
+    dispatch('notifyObservers', payload)
     commit('removeCategory', { index })
   },
   updateCategory ({ commit, getters }, payload) {
@@ -29,6 +32,9 @@ export const actions = {
   },
   setCategories ({ commit }, payload) {
     commit('setCategories', payload)
+  },
+  notifyObservers ({ dispatch }, payload) {
+    observers.forEach(observer => dispatch(`${observer}/removedCategory`, payload, { root: true }))
   }
 }
 
