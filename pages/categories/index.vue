@@ -2,7 +2,7 @@
   <v-container>
     <sub-header :title="title" />
 
-    <draggable v-model="categories" v-bind="dragOptions" :class="dragClass" @start="isDragging = true" @end="isDragging = false">
+    <draggable v-model="categories" v-bind="dragOptions" :class="dragClass" @start="onStart" @end="onEnd">
       <v-card
         v-for="category of categories"
         :key="category.id"
@@ -37,9 +37,11 @@
 import { mapActions } from 'vuex'
 import draggable from 'vuedraggable'
 import { required, shorter } from '@/validators/validators'
+import useDraggable from '@/mixins/useDraggable'
 
 export default {
   components: { draggable },
+  extends: useDraggable,
   data () {
     return {
       title: this.$t('title.categories.index'),
@@ -53,12 +55,7 @@ export default {
       rules: [
         required,
         shorter(20)
-      ],
-      isDragging: false,
-      dragOptions: {
-        animation: 200,
-        delay: 50
-      }
+      ]
     }
   },
   head () {
@@ -73,12 +70,6 @@ export default {
       },
       set (value) {
         this.setCategories({ categories: value })
-      }
-    },
-    dragClass () {
-      return {
-        cgrab: !this.isDragging,
-        cgrabbing: this.isDragging
       }
     }
   },

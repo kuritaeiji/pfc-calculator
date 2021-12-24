@@ -2,13 +2,13 @@
   <v-container>
     <sub-header :title="title" />
 
-    <v-tabs background-color="grey lighten-4" centered class="mb-4">
+    <v-tabs background-color="grey lighten-4" class="mb-4">
       <v-tab v-for="category of categories" :key="category.id" @click="changeTab(category)">
         {{ category.name }}
       </v-tab>
     </v-tabs>
 
-    <draggable @end="onEnd">
+    <draggable v-bind="dragOptions" :class="dragClass" @start="onStart" @end="onEnd">
       <v-card v-for="food of filteredFoods(tab)" :key="food.id" flat tile max-width="700">
         {{ food.name }}
       </v-card>
@@ -44,6 +44,7 @@ export default {
     },
     onEnd (event) {
       this.sortFoods({ oldIndex: event.oldIndex, newIndex: event.newIndex })
+      this.isDragging = false
     }
   }
 }
