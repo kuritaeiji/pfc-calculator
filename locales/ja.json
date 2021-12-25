@@ -21,6 +21,10 @@
       "protein": "タンパク質(g)",
       "fat": "脂質(g)",
       "carbonhydrate": "炭水化物(g)"
+    },
+    "body": {
+      "weight": "体重",
+      "fatPercentage": "体脂肪"
     }
   }
 }

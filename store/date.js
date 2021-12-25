@@ -10,6 +10,11 @@ export const getters = {
     return (date) => {
       return state.dates.find(d => d.dating === date)
     }
+  },
+  body (state, getters, rootState, rootGetters) {
+    return (date) => {
+      return rootGetters['body/bodyByDate'](date)
+    }
   }
 }
 
