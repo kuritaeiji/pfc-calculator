@@ -1,4 +1,13 @@
-export const required = v => !!v || '入力して下さい'
+export const required = (v) => {
+  const message = '入力して下さい'
+  if (typeof v === 'string') {
+    return !!v || message
+  }
+
+  if (typeof v === 'number') {
+    return (v === 0 || !!v) || message
+  }
+}
 
 export const shorter = (length) => {
   return (v) => {
