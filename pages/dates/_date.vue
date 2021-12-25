@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  middleware: 'validDate'
+  middleware: ['validDate', 'createDate']
 }
 </script>
