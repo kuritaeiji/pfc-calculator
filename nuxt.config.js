@@ -25,7 +25,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '@/plugins/persistedstate.js', ssr: false },
+    '@/plugins/persistedstate.js',
     '@/plugins/utils.js'
   ],
 
@@ -64,9 +64,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    extend (config, { isDev, isClient }) {
+    extend (config, { isDev }) {
       if (isDev) {
-        config.devtool = isClient ? 'source-map' : 'inline-source-map'
+        config.devtool = 'source-map'
       }
     }
   }
