@@ -1,5 +1,8 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  ssr: false,
+  target: 'server',
+
   head: {
     htmlAttrs: {
       lang: 'ja'
@@ -22,6 +25,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '@/plugins/persistedstate.js', ssr: false },
     '@/plugins/utils.js'
   ],
 
@@ -34,13 +38,12 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
+    '@nuxtjs/i18n'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    '@nuxtjs/i18n'
-  ],
+  modules: [],
 
   moment: {
     locales: ['ja']
