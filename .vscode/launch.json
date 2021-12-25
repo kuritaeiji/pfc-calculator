@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "client:chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "server:node",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["debug"],
+      "port": "9229",
+      "sourceMaps": true
+    }
+  ],
+  "compounds": [
+    {
+      "name": "server-client",
+      "configurations": ["server:node", "client:chrome"]
+    }
+  ]
+}
