@@ -66,11 +66,11 @@ export default {
   extends: useDraggable,
   asyncData ({ store }) {
     const categories = store.getters['category/categories']
-    const selectItems = categories.map(c => ({ text: c.name, value: c.id }))
+    const selectItems = categories.map(c => ({ text: c.title, value: c.id }))
     const defaultCategoryId = categories[0].id
     const newFood = { ...defaultFood, categoryId: defaultCategoryId }
     const updatingFood = { id: 0, ...defaultFood, categoryId: defaultCategoryId }
-    store.dispatch('category/setCurentTab', { category: categories[0] })
+    store.dispatch('category/setCurrentTab', { category: categories[0] })
     return { categories, selectItems, newFood, updatingFood, defaultCategoryId }
   },
   data () {

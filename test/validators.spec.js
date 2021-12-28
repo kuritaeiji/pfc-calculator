@@ -2,12 +2,24 @@ import { required, shorter, select } from '@/validators/validators'
 
 describe('validators', () => {
   describe('required', () => {
-    it('引数が空文字である時、エラーメッセージを返す', () => {
-      expect(required('')).toEqual('入力して下さい')
+    describe('引数が文字列である時', () => {
+      it('引数が空文字である時、エラーメッセージを返す', () => {
+        expect(required('')).toEqual('入力して下さい')
+      })
+
+      it('引数が文字列である時、trueを返す', () => {
+        expect(required('test')).toEqual(true)
+      })
     })
 
-    it('引数が文字列である時、trueを返す', () => {
-      expect(required('test')).toEqual(true)
+    describe('引数が数値である時', () => {
+      it('引数が0であるとき、trueを返す', () => {
+        expect(required(0)).toEqual(true)
+      })
+
+      it('引数が存在する時、trueを返す', () => {
+        expect(required(1)).toEqual(true)
+      })
     })
   })
 

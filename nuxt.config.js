@@ -1,5 +1,8 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  ssr: false,
+  target: 'server',
+
   head: {
     htmlAttrs: {
       lang: 'ja'
@@ -22,6 +25,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/persistedstate.js',
+    '@/plugins/utils.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -32,13 +37,17 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/moment',
+    '@nuxtjs/i18n'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    '@nuxtjs/i18n'
-  ],
+  modules: [],
+
+  moment: {
+    locales: ['ja']
+  },
 
   i18n: {
     locales: [{ code: 'ja', file: 'ja.json' }],
@@ -55,5 +64,10 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extend (config, { isDev }) {
+      if (isDev) {
+        config.devtool = 'source-map'
+      }
+    }
   }
 }

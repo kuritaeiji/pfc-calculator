@@ -10,10 +10,12 @@
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "yarn lint:js",
     "lintfix": "yarn lint:js --fix",
-    "test": "jest"
+    "test": "jest",
+    "debug": "node --inspect-brk=9229 node_modules/nuxt/bin/nuxt"
   },
   "dependencies": {
     "@nuxtjs/i18n": "^7.2.0",
+    "@nuxtjs/moment": "^1.6.1",
     "core-js": "^3.19.3",
     "lodash": "^4.17.21",
     "nuxt": "^2.15.8",
@@ -22,6 +24,7 @@
     "vue-template-compiler": "^2.6.14",
     "vuedraggable": "^2.24.3",
     "vuetify": "^2.6.1",
+    "vuex-persistedstate": "^4.1.0",
     "webpack": "^4.46.0"
   },
   "devDependencies": {
