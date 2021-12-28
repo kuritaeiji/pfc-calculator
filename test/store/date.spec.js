@@ -26,7 +26,7 @@ describe('getters', () => {
 
 describe('actions', () => {
   describe('addDate', () => {
-    const payload = { date: '2020-01-01' }
+    const payload = { date: { string: '2020-01-01' } }
     let commit
     beforeEach(() => {
       commit = jest.fn()
@@ -63,7 +63,7 @@ describe('mutations', () => {
   }
 
   it('addDate', () => {
-    mutations.addDate(state, { date: sampleDate.string })
+    mutations.addDate(state, { date: { string: sampleDate.string } })
     expect(state.dates[0]).toEqual(sampleDate)
     expect(state.currentId).toEqual(1)
   })
