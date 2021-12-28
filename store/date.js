@@ -1,4 +1,4 @@
-// { id: 1, dating: '2020-01-01' }
+// { id: 1, year: 2020, month: 1, day: 1, string: '2020-01-01' }
 
 export const state = () => ({
   dates: [],
@@ -6,9 +6,10 @@ export const state = () => ({
 })
 
 export const getters = {
+  // date = '2020-01-01'
   findDate (state) {
     return (date) => {
-      return state.dates.find(d => d.dating === date)
+      return state.dates.find(d => new Date(date).valueOf() === new Date(d.string).valueOf())
     }
   },
   body (state, getters, rootState, rootGetters) {
@@ -19,8 +20,9 @@ export const getters = {
 }
 
 export const actions = {
+  // payload = { date: '2020-01-01' }
   addDate ({ commit, getters }, payload) {
-    if (!getters.findDate(payload.date.dating)) {
+    if (!getters.findDate(payload.date)) {
       commit('addDate', payload)
     }
   }
@@ -28,6 +30,13 @@ export const actions = {
 
 export const mutations = {
   addDate (state, { date }) {
-    state.dates.push({ ...date, id: ++state.currentId })
+    const dateObject = new Date(date)
+    state.dates.push({
+      id: ++state.currentId,
+      year: dateObject.getFullYear(),
+      month: dateObject.getMonth() + 1,
+      day: dateObject.getDate(),
+      string: date
+    })
   }
 }
