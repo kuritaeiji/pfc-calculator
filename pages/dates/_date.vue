@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <sub-header :title="date.dating" />
+    <sub-header :title="date.string" />
 
     <v-card flat tile max-width="500" class="d-flex">
       <body-card-text
@@ -40,7 +40,7 @@ export default {
   },
   head () {
     return {
-      title: this.date.dating
+      title: this.date.string
     }
   },
   methods: {

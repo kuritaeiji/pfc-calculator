@@ -6,7 +6,7 @@ export const state = () => ({
 })
 
 export const getters = {
-  // date = '2020-01-01'
+  // dateString = '2020-01-01'
   findDate (state) {
     return (dateString) => {
       return state.dates.find(d => new Date(dateString).valueOf() === new Date(d.string).valueOf())
