@@ -2,7 +2,7 @@
   <v-container>
     <sub-header :title="date.string" />
 
-    <v-card flat tile max-width="500" class="d-flex">
+    <v-card flat tile max-width="500" class="d-flex mb-4">
       <body-card-text
         data-name="weight"
         :data="body.weight"
@@ -19,6 +19,8 @@
         @finishEdit="updateFatPercentageTemplate"
       />
     </v-card>
+
+    <utils-add-btn text="食材一覧から追加" />
   </v-container>
 </template>
 

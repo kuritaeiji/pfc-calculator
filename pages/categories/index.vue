@@ -27,7 +27,7 @@
       </v-card>
     </draggable>
 
-    <create-dialog @closeDialog="closeCreateDialog" @add="addCategoryTemplate">
+    <create-dialog btn-text="カテゴリー追加" @closeDialog="closeCreateDialog" @add="addCategoryTemplate">
       <v-text-field v-model="newCategory.title" autofocus :label="$t('model.category.title')" :rules="rules" />
     </create-dialog>
   </v-container>

@@ -36,7 +36,7 @@
       </v-card>
     </draggable>
 
-    <create-dialog @closeDialog="closeCreateDialog" @add="addFoodTemplate">
+    <create-dialog btn-text="食材・料理追加" @closeDialog="closeCreateDialog" @add="addFoodTemplate">
       <forms-food
         v-bind.sync="newFood"
         :select-items="selectItems"
