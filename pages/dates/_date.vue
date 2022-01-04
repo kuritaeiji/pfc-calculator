@@ -20,24 +20,56 @@
       />
     </v-card>
 
-    <utils-add-btn text="食材一覧から追加" />
+    <create-dialog btn-text="食材・料理一覧から追加" @openDialog="openCreateAteFoodDialog" @add="addAteFoodTemplate">
+      <v-tabs :value="currentTab" class="mb-4">
+        <v-tab v-for="category of categories" :key="category.id" :href="`#${category.id}`" @click="setCurrentTabTemplate(category)">
+          {{ category.title }}
+        </v-tab>
+      </v-tabs>
+      <v-radio-group v-model="newAteFood.foodId" :rules="ateFoodRules.foodId">
+        <v-card
+          v-for="food of filteredFoods"
+          :key="food.id"
+          flat
+          tile
+          color="grey lighten-4"
+          class="d-flex grey--text mb-4"
+        >
+          <v-card-actions>
+            <v-radio :value="food.id" @click="selectFood(food)" />
+          </v-card-actions>
+          <v-card-title class="font-weight-bold">
+            {{ food.title }}
+          </v-card-title>
+        </v-card>
+      </v-radio-group>
+      <v-text-field v-model.number="newAteFood.amount" :label="amountLabel" :rules="ateFoodRules.amount" />
+    </create-dialog>
   </v-container>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import { required, bigger, decimalPoint } from '@/validators/validators'
 
 export default {
   middleware: ['validDate', 'createDate'],
   asyncData ({ params, store }) {
     const date = store.getters['date/findDate'](params.date)
     const body = store.getters['date/body'](date)
-    return { date, body }
+    const newAteFood = { amount: 0, dateId: date.id, foodId: null }
+    return { date, body, newAteFood }
   },
   data () {
     return {
       updatingWeigth: 0,
-      updatingFatPercentage: 0
+      updatingFatPercentage: 0,
+      createAteFoodDialog: false,
+      amountLabel: this.$t('model.ateFood.amount'),
+      ateFoodRules: {
+        amount: [required, bigger(0), decimalPoint(2)],
+        foodId: [required]
+      }
     }
   },
   head () {
@@ -45,8 +77,14 @@ export default {
       title: this.date.string
     }
   },
+  computed: {
+    ...mapGetters('category', ['categories', 'currentTab']),
+    ...mapGetters('food', ['filteredFoods'])
+  },
   methods: {
     ...mapActions('body', ['updateWeight', 'updateFatPercentage']),
+    ...mapActions('category', ['setCurrentTab']),
+    ...mapActions('ateFood', ['addAteFood']),
     startEditWeight () {
       this.updatingWeigth = this.body.weight
     },
@@ -58,6 +96,20 @@ export default {
     },
     updateFatPercentageTemplate () {
       this.updateFatPercentage({ fatPercentage: this.updatingFatPercentage, date: this.date })
+    },
+    openCreateAteFoodDialog () {
+      this.newAteFood = { amount: 0, dateId: this.date.id, foodId: null }
+      this.amountLabel = this.$t('model.ateFood.amount')
+      this.setCurrentTab({ category: this.categories[0] })
+    },
+    setCurrentTabTemplate (category) {
+      this.setCurrentTab({ category })
+    },
+    selectFood (food) {
+      this.amountLabel = this.$t('model.ateFood.amount') + `(${food.unit})`
+    },
+    addAteFoodTemplate () {
+      this.addAteFood({ ateFood: this.newAteFood })
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" @click:outside="closeDialog">
+  <v-dialog v-model="dialog" max-width="700" @click:outside="closeDialog">
     <template #activator="{ on, attrs }">
-      <utils-add-btn :text="btnText" :attrs="attrs" :on="on" />
+      <utils-add-btn :text="btnText" :attrs="attrs" :on="on" @click="openDialog" />
     </template>
 
     <v-card flat tile class="pa-4" @submit.prevent>
@@ -29,6 +29,11 @@ export default {
     }
   },
   methods: {
+    async openDialog () {
+      this.$emit('openDialog')
+      await this.$nextTick()
+      this.$refs.form.resetValidation()
+    },
     closeDialog () {
       this.$emit('closeDialog')
     },

@@ -7,6 +7,7 @@
     class="font-weight-bold"
     v-bind="attrs"
     v-on="on"
+    @click="$emit('click')"
   >
     <v-icon left>
       mdi-plus-thick
