@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <sub-header :title="title" />
 
     <v-tabs background-color="grey lighten-4" class="mb-4">
@@ -36,7 +36,7 @@
       </v-card>
     </draggable>
 
-    <create-dialog @closeDialog="closeCreateDialog" @add="addFoodTemplate">
+    <create-dialog btn-text="食材・料理追加" @closeDialog="closeCreateDialog" @add="addFoodTemplate">
       <forms-food
         v-bind.sync="newFood"
         :select-items="selectItems"

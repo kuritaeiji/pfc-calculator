@@ -25,6 +25,9 @@
     "body": {
       "weight": "体重",
       "fatPercentage": "体脂肪"
+    },
+    "ateFood": {
+      "amount": "量"
     }
   }
 }

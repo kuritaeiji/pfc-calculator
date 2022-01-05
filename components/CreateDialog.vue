@@ -1,21 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" @click:outside="closeDialog">
+  <v-dialog v-model="dialog" max-width="700" @click:outside="closeDialog">
     <template #activator="{ on, attrs }">
-      <v-btn
-        large
-        depressed
-        dark
-        max-width="700"
-        color="light-blue lighten-2"
-        class="font-weight-bold"
-        v-bind="attrs"
-        v-on="on"
-      >
-        <v-icon left>
-          mdi-plus-thick
-        </v-icon>
-        カテゴリー追加
-      </v-btn>
+      <utils-add-btn :text="btnText" :attrs="attrs" :on="on" @click="openDialog" />
     </template>
 
     <v-card flat tile class="pa-4" @submit.prevent>
@@ -31,12 +17,23 @@
 
 <script>
 export default {
+  props: {
+    btnText: {
+      type: String,
+      required: true
+    }
+  },
   data () {
     return {
       dialog: false
     }
   },
   methods: {
+    async openDialog () {
+      this.$emit('openDialog')
+      await this.$nextTick()
+      this.$refs.form.resetValidation()
+    },
     closeDialog () {
       this.$emit('closeDialog')
     },

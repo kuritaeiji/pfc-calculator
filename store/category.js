@@ -16,6 +16,9 @@ export const getters = {
   },
   currentTab (state) {
     return state.currentTab
+  },
+  currentCreateTab (state) {
+    return state.currentCreateTab
   }
 }
 
