@@ -79,7 +79,7 @@ export default {
   computed: {
     ...mapGetters('category', ['categories', 'currentTab']),
     ...mapGetters('food', ['filteredFoods', 'foodById']),
-    ...mapGetters('ateFood', ['ateFoodsByDate']),
+    ...mapGetters('date', ['ateFoodsByDate']),
     meals () {
       return this.ateFoodsByDate(this.date)
     },

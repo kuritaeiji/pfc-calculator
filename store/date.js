@@ -16,6 +16,19 @@ export const getters = {
     return (date) => {
       return rootGetters['body/bodyByDate'](date)
     }
+  },
+  ateFoodsByDate (state, getters, rootState, rootGetters) {
+    return (date) => {
+      let ateFoods = rootGetters['ateFood/ateFoods']
+      ateFoods = ateFoods.filter(f => f.dateId === date.id)
+      return ateFoods.map(f => ({ ...rootGetters['ateFood/foodByAteFood'](f), ...rootGetters['ateFood/pfc'](f), ...f }))
+    }
+  },
+  dishesByDate (state, getters, rootState, rootGetters) {
+    return (date) => {
+      const dishes = rootGetters['dish/dishes']
+      return dishes.filter(dish => dish.dateId === date.id)
+    }
   }
 }
 
