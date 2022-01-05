@@ -16,6 +16,11 @@ export const getters = {
     return (id) => {
       return state.foods.findIndex(f => f.id === id)
     }
+  },
+  foodById (state) {
+    return (id) => {
+      return state.foods.find(f => f.id === id)
+    }
   }
 }
 

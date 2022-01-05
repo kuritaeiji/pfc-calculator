@@ -13,14 +13,33 @@ const uprmIndex = 0
 describe('getters', () => {
   it('ateFoodsByDate', () => {
     const date = { id: 1 }
-    const result = getters.ateFoodsByDate({ ateFoods })(date)
-    expect(result).toEqual([ateFoods[0], ateFoods[1]])
+    const foods = [{ id: 1, title: '米' }, { id: 2, title: 'パスタ' }]
+    const gettersStub = {
+      foodByAteFood (ateFood) {
+        if (ateFood.id === 1) { return foods[0] }
+        return foods[1]
+      }
+    }
+    const result = getters.ateFoodsByDate({ ateFoods }, gettersStub)(date)
+    expect(result).toEqual([{ ...foods[0], ...ateFoods[0] }, { ...foods[1], ...ateFoods[1] }])
   })
 
   it('ateFoodIndex', () => {
     const ateFood = { id: 1 }
     const result = getters.ateFoodIndex({ ateFoods })(ateFood)
     expect(result).toEqual(0)
+  })
+
+  it('foodByAteFood', () => {
+    const ateFood = { id: 1 }
+    const food = { id: 1, title: '米' }
+    const rootGettersStub = {
+      'food/foodById' (id) {
+        return food
+      }
+    }
+    const result = getters.foodByAteFood('state', 'getters', 'rootState', rootGettersStub)(ateFood)
+    expect(result).toEqual(food)
   })
 })
 

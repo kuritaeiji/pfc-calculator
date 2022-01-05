@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <sub-header :title="title" />
 
     <v-tabs background-color="grey lighten-4" class="mb-4">

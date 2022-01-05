@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <sub-header :title="date.string" />
 
     <v-card flat tile max-width="500" class="d-flex mb-4">
@@ -19,6 +19,73 @@
         @finishEdit="updateFatPercentageTemplate"
       />
     </v-card>
+
+    <sub-header title="食べた料理一覧" />
+
+    <template v-for="meal of meals">
+      <v-card
+        :key="meal.id"
+        flat
+        tile
+        max-width="1000"
+        class="grey--text pa-3"
+      >
+        <v-row no-gutters>
+          <v-col>
+            <div class="text-caption">
+              料理
+            </div>
+            <div class="font-weight-bold text-truncate">
+              {{ meal.title }}
+            </div>
+          </v-col>
+
+          <v-col class="d-none d-sm-block">
+            <div class="text-caption">
+              {{ $t('model.food.calory') }}
+            </div>
+            <div class="font-weight-bold text-truncate">
+              {{ meal.calory }}kcal
+            </div>
+          </v-col>
+
+          <v-col class="d-none d-sm-block">
+            <div class="text-caption">
+              {{ $t('model.food.protein') }}
+            </div>
+            <div class="font-weight-bold text-truncate">
+              {{ meal.protein }}g
+            </div>
+          </v-col>
+
+          <v-col class="d-none d-sm-block">
+            <div class="text-caption">
+              {{ $t('model.food.fat') }}
+            </div>
+            <div class="font-weight-bold text-truncate">
+              {{ meal.fat }}g
+            </div>
+          </v-col>
+
+          <v-col class="d-none d-sm-block">
+            <div class="text-caption">
+              {{ $t('model.food.carbonhydrate') }}
+            </div>
+            <div class="font-weight-bold">
+              {{ meal.carbonhydrate }}g
+            </div>
+          </v-col>
+
+          <v-col class="d-flex justify-end">
+            <v-icon>mdi-pencil</v-icon>
+            <v-icon>mdi-delete</v-icon>
+          </v-col>
+        </v-row>
+      </v-card>
+      <v-divider :key="`${meal.id}-divider`" />
+    </template>
+
+    <div class="mb-3" />
 
     <create-dialog btn-text="食材・料理一覧から追加" @openDialog="openCreateAteFoodDialog" @add="addAteFoodTemplate">
       <v-tabs :value="currentTab" class="mb-4">
@@ -79,7 +146,11 @@ export default {
   },
   computed: {
     ...mapGetters('category', ['categories', 'currentTab']),
-    ...mapGetters('food', ['filteredFoods'])
+    ...mapGetters('food', ['filteredFoods']),
+    ...mapGetters('ateFood', ['ateFoodsByDate']),
+    meals () {
+      return this.ateFoodsByDate(this.date)
+    }
   },
   methods: {
     ...mapActions('body', ['updateWeight', 'updateFatPercentage']),

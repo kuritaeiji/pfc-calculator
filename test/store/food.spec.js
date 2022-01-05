@@ -20,6 +20,11 @@ describe('getters', () => {
     const result = getters.foodIndexById({ foods })(foods[0].id)
     expect(result).toEqual(0)
   })
+
+  it('foodById', () => {
+    const result = getters.foodById({ foods })(1)
+    expect(result).toEqual(foods[0])
+  })
 })
 
 describe('actions', () => {

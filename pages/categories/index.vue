@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <sub-header :title="title" />
 
     <draggable v-model="categories" v-bind="dragOptions" :class="dragClass" @start="onStart" @end="onEnd">

@@ -6,14 +6,37 @@ export const state = () => ({
 })
 
 export const getters = {
-  ateFoodsByDate (state) {
+  ateFoodsByDate (state, getters) {
     return (date) => {
-      return state.ateFoods.filter(f => f.dateId === date.id)
+      const ateFoods = state.ateFoods.filter(f => f.dateId === date.id)
+      return ateFoods.map(f => ({ ...getters.foodByAteFood(f), ...getters.pfc(f), ...f }))
     }
   },
   ateFoodIndex (state) {
     return (ateFood) => {
       return state.ateFoods.findIndex(f => f.id === ateFood.id)
+    }
+  },
+  foodByAteFood (state, getters, rootState, rootGetters) {
+    return (ateFood) => {
+      return rootGetters['food/foodById'](ateFood.foodId)
+    }
+  },
+  pfc (state, getters, rootState, rootGetters) {
+    return (ateFood) => {
+      const food = getters.foodByAteFood(ateFood)
+      const ratio = ateFood.amount / food.per
+      return {
+        protein: getters.calculate(food.protein, ratio),
+        fat: getters.calculate(food.fat, ratio),
+        carbonhydrate: getters.calculate(food.carbonhydrate, ratio),
+        calory: getters.calculate(food.calory, ratio)
+      }
+    }
+  },
+  calculate () {
+    return (pfc, ratio) => {
+      return Math.round(pfc * ratio * 100) / 100
     }
   }
 }
