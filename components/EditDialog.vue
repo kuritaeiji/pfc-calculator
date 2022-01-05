@@ -33,8 +33,8 @@ export default {
       if (this.$refs.form.validate()) {
         this.$emit('update')
         this.$refs.form.resetValidation()
+        this.dialog = false
       }
-      this.dialog = false
     }
   }
 }

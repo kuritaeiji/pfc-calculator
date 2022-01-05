@@ -37,11 +37,7 @@
 
       <v-col v-else class="d-flex justify-end">
         <edit-dialog @openDialog="editDish(meal)" @update="updateDishTemplate">
-          <v-text-field v-model="updatingDish.title" :label="$t('model.dish.title')" :rules="dishRules.title" />
-          <v-text-field v-model.number="updatingDish.calory" :label="$t('model.dish.calory')" :rules="dishRules.pfc" />
-          <v-text-field v-model.number="updatingDish.protein" :label="$t('model.dish.protein')" :rules="dishRules.pfc" />
-          <v-text-field v-model.number="updatingDish.fat" :label="$t('model.dish.fat')" :rules="dishRules.pfc" />
-          <v-text-field v-model.number="updatingDish.carbonhydrate" :label="$t('model.dish.carbonhydrate')" :rules="dishRules.pfc" />
+          <forms-dish v-bind.sync="updatingDish" />
         </edit-dialog>
         <span class="mr-3" />
         <delete-dialog @delete="removeDishTemplate(meal)" />
@@ -62,18 +58,13 @@
     <div class="mb-3 d-block d-sm-none" />
 
     <create-dialog btn-text="料理を追加" @openDialog="openCreateDishDialog" @add="addDishTemplate">
-      <v-text-field v-model="newDish.title" :label="$t('model.dish.title')" :rules="dishRules.title" />
-      <v-text-field v-model.number="newDish.calory" :label="$t('model.dish.calory')" :rules="dishRules.pfc" />
-      <v-text-field v-model.number="newDish.protein" :label="$t('model.dish.protein')" :rules="dishRules.pfc" />
-      <v-text-field v-model.number="newDish.fat" :label="$t('model.dish.fat')" :rules="dishRules.pfc" />
-      <v-text-field v-model.number="newDish.carbonhydrate" :label="$t('model.dish.carbonhydrate')" :rules="dishRules.pfc" />
+      <forms-dish v-bind.sync="newDish" />
     </create-dialog>
   </v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { required, bigger, decimalPoint, shorter } from '@/validators/validators'
 
 export default {
   middleware: ['validDate', 'createDate'],
@@ -90,11 +81,7 @@ export default {
     return {
       updatingWeight: 0,
       updatingFatPercentage: 0,
-      amountLabel: this.$t('model.ateFood.amount'),
-      dishRules: {
-        title: [required, shorter(20)],
-        pfc: [required, bigger(0), decimalPoint(2)]
-      }
+      amountLabel: this.$t('model.ateFood.amount')
     }
   },
   head () {
