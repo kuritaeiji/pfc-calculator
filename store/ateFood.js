@@ -52,6 +52,11 @@ export const actions = {
   removeAteFood ({ commit, getters }, payload) {
     const index = getters.ateFoodIndex(payload.ateFood)
     commit('removeAteFood', { index })
+  },
+  setCategoryTab ({ dispatch, getters, rootGetters }, payload) {
+    const food = getters.foodByAteFood(payload.ateFood)
+    const category = rootGetters['food/categoryByFood'](food)
+    dispatch('category/setCurrentTab', { category }, { root: true })
   }
 }
 

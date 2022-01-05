@@ -102,6 +102,23 @@ describe('actions', () => {
     actions.removeAteFood({ commit, getters: gettersStub }, payload)
     expect(commit).toHaveBeenCalledWith('removeAteFood', { index: uprmIndex })
   })
+
+  it('setCategoryTab', () => {
+    const category = { id: 1, title: 'カテゴリー' }
+    const gettersStub = {
+      foodByAteFood (ateFood) {
+        return 'food'
+      }
+    }
+    const rootGettersStub = {
+      'food/categoryByFood' (food) {
+        return category
+      }
+    }
+    const dispatch = jest.fn()
+    actions.setCategoryTab({ dispatch, getters: gettersStub, rootGetters: rootGettersStub }, { ateFood: 'ateFood' })
+    expect(dispatch).toHaveBeenCalledWith('category/setCurrentTab', { category }, { root: true })
+  })
 })
 
 describe('mutations', () => {

@@ -32,6 +32,7 @@ export default {
     update () {
       if (this.$refs.form.validate()) {
         this.$emit('update')
+        this.$refs.form.resetValidation()
       }
       this.dialog = false
     }

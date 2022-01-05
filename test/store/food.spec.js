@@ -25,6 +25,15 @@ describe('getters', () => {
     const result = getters.foodById({ foods })(1)
     expect(result).toEqual(foods[0])
   })
+
+  it('categoryByFood', () => {
+    const category = { id: 1, title: 'カテゴリー' }
+    const rootGettersStub = {
+      'category/categories': [category]
+    }
+    const result = getters.categoryByFood('state', 'getters', 'rootState', rootGettersStub)(foods[0])
+    expect(result).toEqual(category)
+  })
 })
 
 describe('actions', () => {
