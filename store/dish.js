@@ -17,7 +17,7 @@ export const getters = {
 }
 
 export const actions = {
-  addDishe ({ commit }, payload) {
+  addDish ({ commit }, payload) {
     commit('addDish', payload)
   },
   updateDish ({ commit, getters }, payload) {
@@ -31,7 +31,7 @@ export const actions = {
 }
 
 export const mutations = {
-  addDishe (state, { dish }) {
+  addDish (state, { dish }) {
     state.dishes.push({ ...dish, id: ++state.currentId })
   },
   updateDish (state, { dish, index }) {

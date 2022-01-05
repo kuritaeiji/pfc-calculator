@@ -31,7 +31,7 @@ describe('actions', () => {
   })
 
   it('addDish', () => {
-    actions.addDishe({ commit }, { dish: dishes[0] })
+    actions.addDish({ commit }, { dish: dishes[0] })
     expect(commit).toHaveBeenCalledWith('addDish', { dish: dishes[0] })
   })
 
@@ -60,7 +60,7 @@ describe('mutations', () => {
 
   it('addDish', () => {
     const dish = { title: 'ラーメン' }
-    mutations.addDishe(_state, { dish })
+    mutations.addDish(_state, { dish })
     expect(_state.dishes[_state.dishes.length - 1]).toEqual({ ...dish, id: 4 })
     expect(_state.currentId).toEqual(4)
   })
