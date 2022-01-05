@@ -6,7 +6,7 @@
       <body-card-text
         data-name="weight"
         :data="body.weight"
-        :updating-data.sync="updatingWeigth"
+        :updating-data.sync="updatingWeight"
         @startEdit="startEditWeight"
         @finishEdit="updateWeightTemplate"
       />
@@ -21,115 +21,28 @@
     </v-card>
 
     <sub-header title="食べた料理一覧" />
-    <template v-for="meal of meals">
-      <v-card
-        :key="`${meal.id}-card`"
-        flat
-        tile
-        max-width="1000"
-        class="grey--text pa-3"
-      >
-        <v-row no-gutters>
-          <v-col>
-            <div class="text-caption">
-              料理
-            </div>
-            <div class="font-weight-bold text-truncate">
-              {{ meal.title }}
-            </div>
-          </v-col>
-          <v-col class="d-none d-sm-block">
-            <div class="text-caption">
-              {{ $t('model.food.calory') }}
-            </div>
-            <div class="font-weight-bold text-truncate">
-              {{ meal.calory }}kcal
-            </div>
-          </v-col>
-          <v-col class="d-none d-sm-block">
-            <div class="text-caption">
-              {{ $t('model.food.protein') }}
-            </div>
-            <div class="font-weight-bold text-truncate">
-              {{ meal.protein }}g
-            </div>
-          </v-col>
-          <v-col class="d-none d-sm-block">
-            <div class="text-caption">
-              {{ $t('model.food.fat') }}
-            </div>
-            <div class="font-weight-bold text-truncate">
-              {{ meal.fat }}g
-            </div>
-          </v-col>
-          <v-col class="d-none d-sm-block">
-            <div class="text-caption">
-              {{ $t('model.food.carbonhydrate') }}
-            </div>
-            <div class="font-weight-bold">
-              {{ meal.carbonhydrate }}g
-            </div>
-          </v-col>
-          <v-col v-if="isAteFood(meal)" class="d-flex justify-end">
-            <edit-dialog @openDialog="editAteFood(meal)" @update="updateAteFoodTemplate">
-              <v-tabs :value="currentTab.toString()">
-                <v-tab v-for="category of categories" :key="category.id" :href="`#${category.id}`" @click="setCurrentTabTemplate(category)">
-                  {{ category.title }}
-                </v-tab>
-              </v-tabs>
 
-              <v-radio-group v-model="updatingAteFood.foodId" :rules="ateFoodRules.foodId">
-                <v-card
-                  v-for="food of filteredFoods"
-                  :key="food.id"
-                  flat
-                  tile
-                  color="grey lighten-4"
-                  class="d-flex grey--text mb-4"
-                >
-                  <v-card-actions>
-                    <v-radio :value="food.id" @click="setAmountLabel(food)" />
-                  </v-card-actions>
-                  <v-card-title class="font-weight-bold">
-                    {{ food.title }}
-                  </v-card-title>
-                </v-card>
-              </v-radio-group>
-              <v-text-field v-model.number="updatingAteFood.amount" :label="amountLabel" :rules="ateFoodRules.amount" />
-            </edit-dialog>
-            <delete-dialog @delete="removeAteFoodTemplate(meal)" />
-          </v-col>
-        </v-row>
-      </v-card>
-      <v-divider :key="`${meal.id}-divider`" />
-    </template>
+    <ate-food-card v-for="meal of meals" :key="meal.id" :meal="meal">
+      <v-col v-if="isAteFood(meal)" class="d-flex justify-end">
+        <edit-dialog @openDialog="editAteFood(meal)" @update="updateAteFoodTemplate">
+          <forms-ate-food
+            v-bind.sync="updatingAteFood"
+            :amount-label="amountLabel"
+            @clickRadio="setAmountLabel"
+          />
+        </edit-dialog>
+        <delete-dialog @delete="removeAteFoodTemplate(meal)" />
+      </v-col>
+    </ate-food-card>
 
     <div class="mb-3" />
 
     <create-dialog btn-text="食材・料理一覧から追加" @openDialog="openCreateAteFoodDialog" @add="addAteFoodTemplate">
-      <v-tabs :value="currentTab.toString()" class="mb-4">
-        <v-tab v-for="category of categories" :key="category.id" :href="`#${category.id}`" @click="setCurrentTabTemplate(category)">
-          {{ category.title }}
-        </v-tab>
-      </v-tabs>
-      <v-radio-group v-model="newAteFood.foodId" :rules="ateFoodRules.foodId">
-        <v-card
-          v-for="food of filteredFoods"
-          :key="food.id"
-          flat
-          tile
-          color="grey lighten-4"
-          class="d-flex grey--text mb-4"
-        >
-          <v-card-actions>
-            <v-radio :value="food.id" @click="setAmountLabel(food)" />
-          </v-card-actions>
-          <v-card-title class="font-weight-bold">
-            {{ food.title }}
-          </v-card-title>
-        </v-card>
-      </v-radio-group>
-      <v-text-field v-model.number="newAteFood.amount" :label="amountLabel" :rules="ateFoodRules.amount" />
+      <forms-ate-food
+        v-bind.sync="newAteFood"
+        :amount-label="amountLabel"
+        @clickRadio="setAmountLabel"
+      />
     </create-dialog>
   </v-container>
 </template>
@@ -149,7 +62,7 @@ export default {
   },
   data () {
     return {
-      updatingWeigth: 0,
+      updatingWeight: 0,
       updatingFatPercentage: 0,
       amountLabel: this.$t('model.ateFood.amount'),
       ateFoodRules: {
@@ -181,10 +94,10 @@ export default {
     ...mapActions('category', ['setCurrentTab']),
     ...mapActions('ateFood', ['addAteFood', 'removeAteFood', 'setCategoryTab', 'updateAteFood']),
     startEditWeight () {
-      this.updatingWeigth = this.body.weight
+      this.updatingWeight = this.body.weight
     },
     updateWeightTemplate () {
-      this.updateWeight({ weight: this.updatingWeigth, date: this.date })
+      this.updateWeight({ weight: this.updatingWeight, date: this.date })
     },
     startEditFatPercentage () {
       this.updatingFatPercentage = this.body.fatPercentage
