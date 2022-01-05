@@ -22,7 +22,7 @@
 
     <sub-header title="食べた料理一覧" />
 
-    <ate-food-card v-for="meal of meals" :key="meal.id" :meal="meal">
+    <meal-card v-for="meal of meals" :key="meal.id" :meal="meal">
       <v-col v-if="isAteFood(meal)" class="d-flex justify-end">
         <edit-dialog @openDialog="editAteFood(meal)" @update="updateAteFoodTemplate">
           <forms-ate-food
@@ -31,9 +31,22 @@
             @clickRadio="setAmountLabel"
           />
         </edit-dialog>
+        <span class="mr-3" />
         <delete-dialog @delete="removeAteFoodTemplate(meal)" />
       </v-col>
-    </ate-food-card>
+
+      <v-col v-else class="d-flex justify-end">
+        <edit-dialog @openDialog="editDish(meal)" @update="updateDishTemplate">
+          <v-text-field v-model="updatingDish.title" :label="$t('model.dish.title')" :rules="dishRules.title" />
+          <v-text-field v-model.number="updatingDish.calory" :label="$t('model.dish.calory')" :rules="dishRules.pfc" />
+          <v-text-field v-model.number="updatingDish.protein" :label="$t('model.dish.protein')" :rules="dishRules.pfc" />
+          <v-text-field v-model.number="updatingDish.fat" :label="$t('model.dish.fat')" :rules="dishRules.pfc" />
+          <v-text-field v-model.number="updatingDish.carbonhydrate" :label="$t('model.dish.carbonhydrate')" :rules="dishRules.pfc" />
+        </edit-dialog>
+        <span class="mr-3" />
+        <delete-dialog @delete="removeDishTemplate(meal)" />
+      </v-col>
+    </meal-card>
 
     <div class="mb-3" />
 
@@ -70,7 +83,8 @@ export default {
     const newAteFood = { amount: 0, dateId: date.id, foodId: null }
     const updatingAteFood = { ...newAteFood, id: 0 }
     const newDish = { title: '', calory: 0, protein: 0, fat: 0, carbonhydrate: 0, dateId: date.id }
-    return { date, body, newAteFood, updatingAteFood, newDish }
+    const updatingDish = { ...newDish, id: 0 }
+    return { date, body, newAteFood, updatingAteFood, newDish, updatingDish }
   },
   data () {
     return {
@@ -91,9 +105,9 @@ export default {
   computed: {
     ...mapGetters('category', ['categories', 'currentTab']),
     ...mapGetters('food', ['filteredFoods', 'foodById']),
-    ...mapGetters('date', ['ateFoodsByDate']),
+    ...mapGetters('date', ['ateFoodsByDate', 'dishesByDate']),
     meals () {
-      return this.ateFoodsByDate(this.date)
+      return [...this.ateFoodsByDate(this.date), ...this.dishesByDate(this.date)]
     },
     isAteFood () {
       return (meal) => {
@@ -141,13 +155,22 @@ export default {
     removeAteFoodTemplate (ateFood) {
       this.removeAteFood({ ateFood })
     },
+    removeDishTemplate (dish) {
+      this.removeDish({ dish })
+    },
     editAteFood (ateFood) {
       this.updatingAteFood = { id: ateFood.id, amount: ateFood.amount, dateId: this.date.id, foodId: ateFood.foodId }
       this.setCategoryTab({ ateFood })
       this.setAmountLabel(ateFood)
     },
+    editDish (dish) {
+      this.updatingDish = { ...dish }
+    },
     updateAteFoodTemplate () {
       this.updateAteFood({ ateFood: this.updatingAteFood })
+    },
+    updateDishTemplate () {
+      this.updateDish({ dish: this.updatingDish })
     }
   }
 }

@@ -6,11 +6,11 @@
       class="grey--text pa-3"
     >
       <v-row no-gutters>
-        <v-col>
+        <v-col class="text-truncate">
           <div class="text-caption">
             料理
           </div>
-          <div class="font-weight-bold text-truncate">
+          <div class="font-weight-bold">
             {{ meal.title }}
           </div>
         </v-col>
@@ -18,7 +18,7 @@
           <div class="text-caption">
             {{ $t('model.food.calory') }}
           </div>
-          <div class="font-weight-bold text-truncate">
+          <div class="font-weight-bold">
             {{ meal.calory }}kcal
           </div>
         </v-col>
@@ -26,7 +26,7 @@
           <div class="text-caption">
             {{ $t('model.food.protein') }}
           </div>
-          <div class="font-weight-bold text-truncate">
+          <div class="font-weight-bold">
             {{ meal.protein }}g
           </div>
         </v-col>
@@ -34,7 +34,7 @@
           <div class="text-caption">
             {{ $t('model.food.fat') }}
           </div>
-          <div class="font-weight-bold text-truncate">
+          <div class="font-weight-bold">
             {{ meal.fat }}g
           </div>
         </v-col>
