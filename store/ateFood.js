@@ -6,11 +6,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  ateFoodsByDate (state, getters) {
-    return (date) => {
-      const ateFoods = state.ateFoods.filter(f => f.dateId === date.id)
-      return ateFoods.map(f => ({ ...getters.foodByAteFood(f), ...getters.pfc(f), ...f }))
-    }
+  ateFoods (state) {
+    return state.ateFoods
   },
   ateFoodIndex (state) {
     return (ateFood) => {

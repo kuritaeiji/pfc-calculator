@@ -22,7 +22,7 @@
 
     <sub-header title="食べた料理一覧" />
 
-    <ate-food-card v-for="meal of meals" :key="meal.id" :meal="meal">
+    <meal-card v-for="meal of meals" :key="meal.id" :meal="meal">
       <v-col v-if="isAteFood(meal)" class="d-flex justify-end">
         <edit-dialog @openDialog="editAteFood(meal)" @update="updateAteFoodTemplate">
           <forms-ate-food
@@ -31,9 +31,18 @@
             @clickRadio="setAmountLabel"
           />
         </edit-dialog>
+        <span class="mr-3" />
         <delete-dialog @delete="removeAteFoodTemplate(meal)" />
       </v-col>
-    </ate-food-card>
+
+      <v-col v-else class="d-flex justify-end">
+        <edit-dialog @openDialog="editDish(meal)" @update="updateDishTemplate">
+          <forms-dish v-bind.sync="updatingDish" />
+        </edit-dialog>
+        <span class="mr-3" />
+        <delete-dialog @delete="removeDishTemplate(meal)" />
+      </v-col>
+    </meal-card>
 
     <div class="mb-3" />
 
@@ -44,12 +53,18 @@
         @clickRadio="setAmountLabel"
       />
     </create-dialog>
+
+    <div class="mr-3 d-none d-sm-inline" />
+    <div class="mb-3 d-block d-sm-none" />
+
+    <create-dialog btn-text="料理を追加" @openDialog="openCreateDishDialog" @add="addDishTemplate">
+      <forms-dish v-bind.sync="newDish" />
+    </create-dialog>
   </v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { required, bigger, decimalPoint } from '@/validators/validators'
 
 export default {
   middleware: ['validDate', 'createDate'],
@@ -58,17 +73,15 @@ export default {
     const body = store.getters['date/body'](date)
     const newAteFood = { amount: 0, dateId: date.id, foodId: null }
     const updatingAteFood = { ...newAteFood, id: 0 }
-    return { date, body, newAteFood, updatingAteFood }
+    const newDish = { title: '', calory: 0, protein: 0, fat: 0, carbonhydrate: 0, dateId: date.id }
+    const updatingDish = { ...newDish, id: 0 }
+    return { date, body, newAteFood, updatingAteFood, newDish, updatingDish }
   },
   data () {
     return {
       updatingWeight: 0,
       updatingFatPercentage: 0,
-      amountLabel: this.$t('model.ateFood.amount'),
-      ateFoodRules: {
-        amount: [required, bigger(0), decimalPoint(2)],
-        foodId: [required]
-      }
+      amountLabel: this.$t('model.ateFood.amount')
     }
   },
   head () {
@@ -79,9 +92,9 @@ export default {
   computed: {
     ...mapGetters('category', ['categories', 'currentTab']),
     ...mapGetters('food', ['filteredFoods', 'foodById']),
-    ...mapGetters('ateFood', ['ateFoodsByDate']),
+    ...mapGetters('date', ['ateFoodsByDate', 'dishesByDate']),
     meals () {
-      return this.ateFoodsByDate(this.date)
+      return [...this.ateFoodsByDate(this.date), ...this.dishesByDate(this.date)]
     },
     isAteFood () {
       return (meal) => {
@@ -93,6 +106,7 @@ export default {
     ...mapActions('body', ['updateWeight', 'updateFatPercentage']),
     ...mapActions('category', ['setCurrentTab']),
     ...mapActions('ateFood', ['addAteFood', 'removeAteFood', 'setCategoryTab', 'updateAteFood']),
+    ...mapActions('dish', ['addDish', 'updateDish', 'removeDish']),
     startEditWeight () {
       this.updatingWeight = this.body.weight
     },
@@ -110,6 +124,9 @@ export default {
       this.amountLabel = this.$t('model.ateFood.amount')
       this.setCurrentTab({ category: this.categories[0] })
     },
+    openCreateDishDialog () {
+      this.newDish = { title: '', calory: 0, protein: 0, fat: 0, carbonhydrate: 0, dateId: this.date.id }
+    },
     setCurrentTabTemplate (category) {
       this.setCurrentTab({ category })
     },
@@ -119,16 +136,28 @@ export default {
     addAteFoodTemplate () {
       this.addAteFood({ ateFood: this.newAteFood })
     },
+    addDishTemplate () {
+      this.addDish({ dish: this.newDish })
+    },
     removeAteFoodTemplate (ateFood) {
       this.removeAteFood({ ateFood })
+    },
+    removeDishTemplate (dish) {
+      this.removeDish({ dish })
     },
     editAteFood (ateFood) {
       this.updatingAteFood = { id: ateFood.id, amount: ateFood.amount, dateId: this.date.id, foodId: ateFood.foodId }
       this.setCategoryTab({ ateFood })
       this.setAmountLabel(ateFood)
     },
+    editDish (dish) {
+      this.updatingDish = { ...dish }
+    },
     updateAteFoodTemplate () {
       this.updateAteFood({ ateFood: this.updatingAteFood })
+    },
+    updateDishTemplate () {
+      this.updateDish({ dish: this.updatingDish })
     }
   }
 }

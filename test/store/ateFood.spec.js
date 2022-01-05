@@ -11,24 +11,6 @@ const removingAteFood = ateFoods[0]
 const uprmIndex = 0
 
 describe('getters', () => {
-  it('ateFoodsByDate', () => {
-    const date = { id: 1 }
-    const foods = [{ id: 1, title: '米' }, { id: 2, title: 'パスタ' }]
-    const pfcs = [{ protein: 100, fat: 100, carbonhydrate: 100, calory: 100 }, { protein: 100, fat: 100, carbonhydrate: 1000, calory: 1000 }]
-    const gettersStub = {
-      foodByAteFood (ateFood) {
-        if (ateFood.id === 1) { return foods[0] }
-        return foods[1]
-      },
-      pfc (ateFood) {
-        if (ateFood.id === 1) { return pfcs[0] }
-        return pfcs[1]
-      }
-    }
-    const result = getters.ateFoodsByDate({ ateFoods }, gettersStub)(date)
-    expect(result).toEqual([{ ...foods[0], ...pfcs[0], ...ateFoods[0] }, { ...foods[1], ...pfcs[1], ...ateFoods[1] }])
-  })
-
   it('ateFoodIndex', () => {
     const ateFood = { id: 1 }
     const result = getters.ateFoodIndex({ ateFoods })(ateFood)
