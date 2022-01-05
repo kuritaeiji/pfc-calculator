@@ -21,10 +21,9 @@
     </v-card>
 
     <sub-header title="食べた料理一覧" />
-
     <template v-for="meal of meals">
       <v-card
-        :key="meal.id"
+        :key="`${meal.id}-card`"
         flat
         tile
         max-width="1000"
@@ -39,7 +38,6 @@
               {{ meal.title }}
             </div>
           </v-col>
-
           <v-col class="d-none d-sm-block">
             <div class="text-caption">
               {{ $t('model.food.calory') }}
@@ -48,7 +46,6 @@
               {{ meal.calory }}kcal
             </div>
           </v-col>
-
           <v-col class="d-none d-sm-block">
             <div class="text-caption">
               {{ $t('model.food.protein') }}
@@ -57,7 +54,6 @@
               {{ meal.protein }}g
             </div>
           </v-col>
-
           <v-col class="d-none d-sm-block">
             <div class="text-caption">
               {{ $t('model.food.fat') }}
@@ -66,7 +62,6 @@
               {{ meal.fat }}g
             </div>
           </v-col>
-
           <v-col class="d-none d-sm-block">
             <div class="text-caption">
               {{ $t('model.food.carbonhydrate') }}
@@ -75,10 +70,9 @@
               {{ meal.carbonhydrate }}g
             </div>
           </v-col>
-
           <v-col class="d-flex justify-end">
             <v-icon>mdi-pencil</v-icon>
-            <v-icon>mdi-delete</v-icon>
+            <delete-dialog @delete="removeMeal(meal)" />
           </v-col>
         </v-row>
       </v-card>
@@ -150,12 +144,17 @@ export default {
     ...mapGetters('ateFood', ['ateFoodsByDate']),
     meals () {
       return this.ateFoodsByDate(this.date)
+    },
+    isAteFood () {
+      return (meal) => {
+        return Object.prototype.hasOwnProperty.call(meal, 'foodId')
+      }
     }
   },
   methods: {
     ...mapActions('body', ['updateWeight', 'updateFatPercentage']),
     ...mapActions('category', ['setCurrentTab']),
-    ...mapActions('ateFood', ['addAteFood']),
+    ...mapActions('ateFood', ['addAteFood', 'removeAteFood']),
     startEditWeight () {
       this.updatingWeigth = this.body.weight
     },
@@ -181,6 +180,11 @@ export default {
     },
     addAteFoodTemplate () {
       this.addAteFood({ ateFood: this.newAteFood })
+    },
+    removeMeal (meal) {
+      if (this.isAteFood(meal)) {
+        this.removeAteFood({ ateFood: meal })
+      }
     }
   }
 }
