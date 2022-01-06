@@ -1,5 +1,5 @@
 <template>
-  <v-card flat tile class="d-flex mb-4">
+  <v-card flat tile max-width="600" class="d-flex mb-4">
     <v-card-text class="grey--text font-weight-bold">
       <div class="text-subtitle-1">
         {{ $t('model.date.calory') }}

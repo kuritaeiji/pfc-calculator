@@ -2,29 +2,24 @@
   <v-container fluid>
     <sub-header :title="date.string" />
 
-    <div class="d-md-flex">
-      <v-card flat tile max-width="400" class="d-flex mb-3">
-        <body-card-text
-          data-name="weight"
-          :data="body.weight"
-          :updating-data.sync="updatingWeight"
-          @startEdit="startEditWeight"
-          @finishEdit="updateWeightTemplate"
-        />
+    <v-card flat tile max-width="400" class="d-flex mb-3">
+      <body-card-text
+        data-name="weight"
+        :data="body.weight"
+        :updating-data.sync="updatingWeight"
+        @startEdit="startEditWeight"
+        @finishEdit="updateWeightTemplate"
+      />
+      <body-card-text
+        data-name="fatPercentage"
+        :data="body.fatPercentage"
+        :updating-data.sync="updatingFatPercentage"
+        @startEdit="startEditFatPercentage"
+        @finishEdit="updateFatPercentageTemplate"
+      />
+    </v-card>
 
-        <body-card-text
-          data-name="fatPercentage"
-          :data="body.fatPercentage"
-          :updating-data.sync="updatingFatPercentage"
-          @startEdit="startEditFatPercentage"
-          @finishEdit="updateFatPercentageTemplate"
-        />
-      </v-card>
-
-      <span class="mr-3" />
-
-      <pfc-card :pfc="pfc" />
-    </div>
+    <pfc-card :pfc="pfc" />
 
     <sub-header title="食べた料理一覧" />
 
