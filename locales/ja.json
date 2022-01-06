@@ -6,6 +6,9 @@
     },
     "categories": {
       "index": "カテゴリー一覧"
+    },
+    "charts": {
+      "body": "体重・体脂肪グラフ"
     }
   },
   "model": {

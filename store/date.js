@@ -5,6 +5,17 @@ export const state = () => ({
   currentId: 0
 })
 
+const initialPfc = { calory: 0, protein: 0, fat: 0, carbonhydrate: 0 }
+const initialBody = { weight: 0, fatPercentage: 0 }
+
+function average (sumObject, length) {
+  if (length) {
+    Object.keys(sumObject).forEach((key) => { sumObject[key] = Math.round(sumObject[key] / length * 100) / 100 })
+    return sumObject
+  }
+  return sumObject
+}
+
 export const getters = {
   // dateString = '2020-01-01'
   findDate (state) {
@@ -12,9 +23,27 @@ export const getters = {
       return state.dates.find(d => new Date(dateString).valueOf() === new Date(d.string).valueOf())
     }
   },
+  findDatesByMonth (state) {
+    return (monthString) => {
+      const [year, month] = monthString.split('-').map(element => Number(element))
+      return state.dates.filter(d => d.year === year && d.month === month)
+    }
+  },
   body (state, getters, rootState, rootGetters) {
     return (date) => {
       return rootGetters['body/bodyByDate'](date)
+    }
+  },
+  monthAverageBody (state, getters) {
+    return (monthString) => {
+      const monthDates = getters.findDatesByMonth(monthString)
+      const sumBody = monthDates.reduce((sum, date) => {
+        const body = getters.body(date)
+        Object.keys(body).forEach((key) => { sum[key] += body[key] })
+        return sum
+      }, { ...initialBody })
+
+      return average(sumBody, monthDates.length)
     }
   },
   ateFoodsByDate (state, getters, rootState, rootGetters) {
@@ -28,6 +57,18 @@ export const getters = {
     return (date) => {
       const dishes = rootGetters['dish/dishes']
       return dishes.filter(dish => dish.dateId === date.id)
+    }
+  },
+  monthAveragePfc (state, getters) {
+    return (monthString) => {
+      const monthDates = getters.findDatesByMonth(monthString)
+      const sumPfc = monthDates.reduce((sum, date) => {
+        const pfc = getters.pfcByDate(date)
+        Object.keys(pfc).forEach((key) => { sum[key] += pfc[key] })
+        return sum
+      }, { ...initialPfc })
+
+      return average(sumPfc, monthDates.length)
     }
   },
   pfcByDate (state, getters) {

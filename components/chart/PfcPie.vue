@@ -1,8 +1,9 @@
 <script>
-import { Pie } from 'vue-chartjs'
+import { Pie, mixins } from 'vue-chartjs'
+const { reactiveProp } = mixins
 
 export default {
-  extends: Pie,
+  mixins: [Pie, reactiveProp],
   props: {
     protein: {
       type: Number,
@@ -19,17 +20,15 @@ export default {
   },
   data (self) {
     return {
-      chartdata: {
-        datacollection: {
-          labels: [this.$t('chart.pfcPie.protein'), this.$t('chart.pfcPie.fat'), this.$t('chart.pfcPie.carbonhydrate')],
-          datasets: [
-            {
-              label: this.$t('chart.pfcPie.name'),
-              backgroundColor: ['#F44336', '#FFEB3B', '#4CAF50'],
-              data: [this.protein, this.fat, this.carbonhydrate]
-            }
-          ]
-        }
+      data: {
+        labels: [this.$t('chart.pfcPie.protein'), this.$t('chart.pfcPie.fat'), this.$t('chart.pfcPie.carbonhydrate')],
+        datasets: [
+          {
+            label: this.$t('chart.pfcPie.name'),
+            backgroundColor: ['#F44336', '#FFEB3B', '#4CAF50'],
+            data: [this.protein, this.fat, this.carbonhydrate]
+          }
+        ]
       },
       options: {
         tooltips: {
@@ -48,7 +47,7 @@ export default {
     }
   },
   mounted () {
-    this.renderChart(this.chartdata.datacollection, this.options)
+    this.renderChart(this.data, this.options)
   }
 }
 </script>

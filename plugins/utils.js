@@ -6,6 +6,10 @@ class Utils {
   formatDate (date) {
     return this.app.$moment(date).format('YYYY-MM-DD')
   }
+
+  formatMonth (date) {
+    return this.app.$moment(date).format('YYYY-MM')
+  }
 }
 
 export default ({ app }, inject) => {
