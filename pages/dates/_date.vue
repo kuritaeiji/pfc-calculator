@@ -2,27 +2,33 @@
   <v-container fluid>
     <sub-header :title="date.string" />
 
-    <v-card flat tile max-width="500" class="d-flex mb-4">
-      <body-card-text
-        data-name="weight"
-        :data="body.weight"
-        :updating-data.sync="updatingWeight"
-        @startEdit="startEditWeight"
-        @finishEdit="updateWeightTemplate"
-      />
+    <div class="d-md-flex">
+      <v-card flat tile max-width="400" class="d-flex mb-3">
+        <body-card-text
+          data-name="weight"
+          :data="body.weight"
+          :updating-data.sync="updatingWeight"
+          @startEdit="startEditWeight"
+          @finishEdit="updateWeightTemplate"
+        />
 
-      <body-card-text
-        data-name="fatPercentage"
-        :data="body.fatPercentage"
-        :updating-data.sync="updatingFatPercentage"
-        @startEdit="startEditFatPercentage"
-        @finishEdit="updateFatPercentageTemplate"
-      />
-    </v-card>
+        <body-card-text
+          data-name="fatPercentage"
+          :data="body.fatPercentage"
+          :updating-data.sync="updatingFatPercentage"
+          @startEdit="startEditFatPercentage"
+          @finishEdit="updateFatPercentageTemplate"
+        />
+      </v-card>
+
+      <span class="mr-3" />
+
+      <pfc-card :pfc="pfc" />
+    </div>
 
     <sub-header title="食べた料理一覧" />
 
-    <meal-card v-for="meal of meals" :key="meal.id" :meal="meal">
+    <meal-card v-for="meal of meals" :key="`${meal.id}-${meal.title}`" :meal="meal">
       <v-col v-if="isAteFood(meal)" class="d-flex justify-end">
         <edit-dialog @openDialog="editAteFood(meal)" @update="updateAteFoodTemplate">
           <forms-ate-food
@@ -92,7 +98,7 @@ export default {
   computed: {
     ...mapGetters('category', ['categories', 'currentTab']),
     ...mapGetters('food', ['filteredFoods', 'foodById']),
-    ...mapGetters('date', ['ateFoodsByDate', 'dishesByDate']),
+    ...mapGetters('date', ['ateFoodsByDate', 'dishesByDate', 'pfcByDate']),
     meals () {
       return [...this.ateFoodsByDate(this.date), ...this.dishesByDate(this.date)]
     },
@@ -100,6 +106,9 @@ export default {
       return (meal) => {
         return Object.prototype.hasOwnProperty.call(meal, 'foodId')
       }
+    },
+    pfc () {
+      return this.pfcByDate(this.date)
     }
   },
   methods: {

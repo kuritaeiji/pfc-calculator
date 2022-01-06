@@ -2,6 +2,12 @@ import { getters, actions, mutations } from '@/store/date'
 
 const sampleDate = { id: 1, year: 2020, month: 1, day: 1, string: '2020-01-01' }
 const dates = [sampleDate]
+const pfcs = [
+  { calory: 10.001, protein: 10.001, fat: 10.001, carbonhydrate: 10.001 },
+  { calory: 10.001, protein: 10.001, fat: 10.001, carbonhydrate: 10.004 }
+]
+const sumRoundedPfcs = { calory: 20, protein: 20, fat: 20, carbonhydrate: 20.01 }
+const sumPfcs = { calory: 20.002, protein: 20.002, fat: 20.002, carbonhydrate: 20.005 }
 
 describe('getters', () => {
   describe('findDate', () => {
@@ -49,6 +55,47 @@ describe('getters', () => {
     }
     const result = getters.dishesByDate('state', 'getters', 'rootState', rootGettersStub)(sampleDate)
     expect(result).toEqual([dishes[0]])
+  })
+
+  it('dishPfcByDate', () => {
+    const gettersStub = {
+      dishesByDate (date) {
+        return pfcs
+      }
+    }
+    const result = getters.dishPfcByDate('state', gettersStub)(sampleDate)
+    expect(result).toEqual(sumPfcs)
+  })
+
+  it('ateFoodPfcByDate', () => {
+    const gettersStub = {
+      ateFoodsByDate (date) {
+        return [{ id: 1 }, { id: 2 }]
+      }
+    }
+    const rootGettersStub = {
+      'ateFood/pfc' (ateFood) {
+        if (ateFood.id === 1) {
+          return pfcs[0]
+        }
+        return pfcs[1]
+      }
+    }
+    const result = getters.ateFoodPfcByDate('state', gettersStub, 'rootState', rootGettersStub)(sampleDate)
+    expect(result).toEqual(sumPfcs)
+  })
+
+  it('pfcByDate', () => {
+    const gettersStub = {
+      dishPfcByDate (date) {
+        return pfcs[0]
+      },
+      ateFoodPfcByDate (date) {
+        return pfcs[1]
+      }
+    }
+    const result = getters.pfcByDate('state', gettersStub)(sampleDate)
+    expect(result).toEqual(sumRoundedPfcs)
   })
 })
 
