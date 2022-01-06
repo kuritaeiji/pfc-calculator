@@ -48,5 +48,13 @@
     "protein": "g",
     "fat": "g",
     "carbonhydrate": "g"
+  },
+  "chart": {
+    "pfcPie": {
+      "name": "PFC比率",
+      "protein": "タンパク質",
+      "fat": "脂肪",
+      "carbonhydrate": "炭水化物"
+    }
   }
 }

@@ -21,6 +21,13 @@
 
     <pfc-card :pfc="pfc" />
 
+    <sub-header :title="$t('chart.pfcPie.name')" />
+    <v-card flat tile max-width="400" class="pa-4">
+      <chart-pfc-pie v-if="isShowPfcPie" v-bind="pfc" />
+    </v-card>
+
+    <div class="mb-3" />
+
     <sub-header title="食べた料理一覧" />
 
     <meal-card v-for="meal of meals" :key="`${meal.id}-${meal.title}`" :meal="meal">
@@ -104,6 +111,9 @@ export default {
     },
     pfc () {
       return this.pfcByDate(this.date)
+    },
+    isShowPfcPie () {
+      return this.pfc.protein || this.pfc.fat || this.pfc.carbonhydrate
     }
   },
   methods: {
