@@ -2,24 +2,28 @@
   <v-container fluid>
     <sub-header :title="date.string" />
 
-    <v-card flat tile max-width="400" class="d-flex mb-3">
-      <body-card-text
-        data-name="weight"
-        :data="body.weight"
-        :updating-data.sync="updatingWeight"
-        @startEdit="startEditWeight"
-        @finishEdit="updateWeightTemplate"
-      />
-      <body-card-text
-        data-name="fatPercentage"
-        :data="body.fatPercentage"
-        :updating-data.sync="updatingFatPercentage"
-        @startEdit="startEditFatPercentage"
-        @finishEdit="updateFatPercentageTemplate"
-      />
-    </v-card>
+    <div class="d-md-flex">
+      <v-card flat tile max-width="400" class="d-flex mb-3">
+        <body-card-text
+          data-name="weight"
+          :data="body.weight"
+          :updating-data.sync="updatingWeight"
+          @startEdit="startEditWeight"
+          @finishEdit="updateWeightTemplate"
+        />
+        <body-card-text
+          data-name="fatPercentage"
+          :data="body.fatPercentage"
+          :updating-data.sync="updatingFatPercentage"
+          @startEdit="startEditFatPercentage"
+          @finishEdit="updateFatPercentageTemplate"
+        />
+      </v-card>
 
-    <pfc-card :pfc="pfc" />
+      <span class="d-none d-md-inline mr-3" />
+
+      <pfc-card :pfc="pfc" />
+    </div>
 
     <sub-header :title="$t('chart.pfcPie.name')" />
     <v-card flat tile max-width="400" class="pa-4">
