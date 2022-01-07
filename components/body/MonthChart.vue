@@ -1,6 +1,6 @@
 <template>
   <div>
-    <calendar-chart-month v-model="month" />
+    <chart-calendar-month v-model="month" />
 
     <v-card flat tile max-width="1050" class="d-md-flex pa-4 mb-4">
       <chart-line :chart-data="chartWeightData" css-classes="body-chart" />
