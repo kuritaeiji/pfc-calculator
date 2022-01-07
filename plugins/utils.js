@@ -10,6 +10,10 @@ class Utils {
   formatMonth (date) {
     return this.app.$moment(date).format('YYYY-MM')
   }
+
+  formatOnlyMonthDay (date) {
+    return this.app.$moment(date).format('M/D')
+  }
 }
 
 export default ({ app }, inject) => {
