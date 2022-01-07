@@ -52,7 +52,8 @@ export default {
       navigations: [
         { text: this.$t('title.categories.index'), to: '/categories' },
         { text: this.$t('title.foods.index'), to: '/foods' },
-        { text: this.$t('title.charts.body'), to: '/charts/body' }
+        { text: this.$t('title.charts.body'), to: '/charts/body' },
+        { text: this.$t('title.charts.pfc'), to: '/charts/pfc' }
       ]
     }
   },
