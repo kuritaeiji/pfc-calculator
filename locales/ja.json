@@ -6,6 +6,10 @@
     },
     "categories": {
       "index": "カテゴリー一覧"
+    },
+    "charts": {
+      "body": "体重・体脂肪グラフ",
+      "pfc": "カロリー・PFCグラフ"
     }
   },
   "model": {
@@ -35,6 +39,26 @@
       "protein": "タンパク質(g)",
       "fat": "脂肪(g)",
       "carbonhydrate": "炭水化物(g)"
+    },
+    "date": {
+      "calory": "カロリー",
+      "protein": "タンパク質",
+      "fat": "脂肪",
+      "carbonhydrate": "炭水化物"
+    }
+  },
+  "unit": {
+    "calory": "kcal",
+    "protein": "g",
+    "fat": "g",
+    "carbonhydrate": "g"
+  },
+  "chart": {
+    "pfcPie": {
+      "name": "PFC比率",
+      "protein": "タンパク質",
+      "fat": "脂肪",
+      "carbonhydrate": "炭水化物"
     }
   }
 }

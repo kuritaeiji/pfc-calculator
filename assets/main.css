@@ -9,3 +9,7 @@
 .cgrabbing {
   cursor: grabbing;
 }
+
+.body-chart {
+  max-width: 500px;
+}

@@ -21,7 +21,7 @@
           </v-btn>
         </template>
         <v-date-picker
-          v-model="date"
+          :value="selectedDate"
           locale="ja-jp"
           first-day-of-week="1"
           :day-format="(d) => new Date(d).getDate()"
@@ -48,22 +48,26 @@ export default {
   data () {
     return {
       drawer: false,
-      date: this.$utils.formatDate(new Date()),
       today: this.$utils.formatDate(new Date()),
       navigations: [
         { text: this.$t('title.categories.index'), to: '/categories' },
-        { text: this.$t('title.foods.index'), to: '/foods' }
+        { text: this.$t('title.foods.index'), to: '/foods' },
+        { text: this.$t('title.charts.body'), to: '/charts/body' },
+        { text: this.$t('title.charts.pfc'), to: '/charts/pfc' }
       ]
     }
   },
-  watch: {
-    date (newDate) {
-      this.$router.push(`/dates/${newDate}`)
+  computed: {
+    selectedDate () {
+      if (this.$route.name === 'dates-date') {
+        return this.$route.params.date
+      }
+      return this.today
     }
   },
   methods: {
     change (event) {
-      console.log(event)
+      this.$router.push(`/dates/${event}`)
     }
   }
 }

@@ -19,7 +19,7 @@ export const getters = {
       return rootGetters['food/foodById'](ateFood.foodId)
     }
   },
-  pfc (state, getters, rootState, rootGetters) {
+  pfc (state, getters) {
     return (ateFood) => {
       const food = getters.foodByAteFood(ateFood)
       const ratio = ateFood.amount / food.per
