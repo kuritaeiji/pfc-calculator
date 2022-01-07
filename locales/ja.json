@@ -51,7 +51,9 @@
     "calory": "kcal",
     "protein": "g",
     "fat": "g",
-    "carbonhydrate": "g"
+    "carbonhydrate": "g",
+    "weight": "kg",
+    "fatPercentage": "%"
   },
   "chart": {
     "pfcPie": {
