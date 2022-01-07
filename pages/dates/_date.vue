@@ -26,8 +26,8 @@
     </div>
 
     <sub-header :title="$t('chart.pfcPie.name')" />
-    <v-card flat tile max-width="400" class="pa-4">
-      <chart-pfc-pie v-if="isShowPfcPie" v-bind="pfc" />
+    <v-card v-if="isShowPfcPie" flat tile max-width="400" class="pa-4">
+      <chart-pie :chart-data="chartData" :options="options" />
     </v-card>
 
     <div class="mb-3" />
@@ -77,8 +77,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import pfcChart from '@/mixins/pfcChart'
 
 export default {
+  extends: pfcChart,
   middleware: ['validDate', 'createDate'],
   asyncData ({ params, store }) {
     const date = store.getters['date/findDate'](params.date)

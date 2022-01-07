@@ -73,7 +73,7 @@ export default {
         labels: this.labels,
         datasets: [
           {
-            label: this.$t('model.body.weight'),
+            label: this.$t('model.body.fatPercentage'),
             data: this.bodyData.map(body => body.fatPercentage),
             fill: false,
             tension: 0
