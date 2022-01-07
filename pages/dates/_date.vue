@@ -36,27 +36,29 @@
 
     <sub-header title="食べた料理一覧" />
 
-    <meal-card v-for="meal of meals" :key="`${meal.id}-${meal.title}`" :meal="meal">
-      <v-col v-if="isAteFood(meal)" class="d-flex justify-end">
-        <edit-dialog @openDialog="editAteFood(meal)" @update="updateAteFoodTemplate">
-          <forms-ate-food
-            v-bind.sync="updatingAteFood"
-            :amount-label="amountLabel"
-            @clickRadio="setAmountLabel"
-          />
-        </edit-dialog>
-        <span class="mr-3" />
-        <delete-dialog @delete="removeAteFoodTemplate(meal)" />
-      </v-col>
+    <v-card flat tile max-width="800" color="grey lighten-4">
+      <meal-card v-for="meal of meals" :key="`${meal.id}-${meal.title}`" :meal="meal">
+        <v-col v-if="isAteFood(meal)" class="d-flex justify-end">
+          <edit-dialog @openDialog="editAteFood(meal)" @update="updateAteFoodTemplate">
+            <forms-ate-food
+              v-bind.sync="updatingAteFood"
+              :amount-label="amountLabel"
+              @clickRadio="setAmountLabel"
+            />
+          </edit-dialog>
+          <span class="mr-3" />
+          <delete-dialog @delete="removeAteFoodTemplate(meal)" />
+        </v-col>
 
-      <v-col v-else class="d-flex justify-end">
-        <edit-dialog @openDialog="editDish(meal)" @update="updateDishTemplate">
-          <forms-dish v-bind.sync="updatingDish" />
-        </edit-dialog>
-        <span class="mr-3" />
-        <delete-dialog @delete="removeDishTemplate(meal)" />
-      </v-col>
-    </meal-card>
+        <v-col v-else class="d-flex justify-end">
+          <edit-dialog @openDialog="editDish(meal)" @update="updateDishTemplate">
+            <forms-dish v-bind.sync="updatingDish" />
+          </edit-dialog>
+          <span class="mr-3" />
+          <delete-dialog @delete="removeDishTemplate(meal)" />
+        </v-col>
+      </meal-card>
+    </v-card>
 
     <div class="mb-3" />
 
