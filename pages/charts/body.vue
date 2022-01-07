@@ -5,16 +5,7 @@
     <body-day-chart v-if="chartType === 'day'" />
     <body-month-chart v-else />
 
-    <v-radio-group v-model="chartType" row class="grey--text font-weight-bold">
-      <v-radio
-        v-for="type of chartTypes"
-        :key="type.value"
-        off-icon="mdi-checkbox-blank-outline"
-        on-icon="mdi-checkbox-marked"
-        :label="type.label"
-        :value="type.value"
-      />
-    </v-radio-group>
+    <chart-radio-button v-model="chartType" :chart-types="chartTypes" />
   </v-container>
 </template>
 
