@@ -25,10 +25,12 @@
       <pfc-card :pfc="pfc" />
     </div>
 
-    <sub-header :title="$t('chart.pfcPie.name')" />
-    <v-card v-if="isShowPfcPie" flat tile max-width="400" class="pa-4">
-      <chart-pie :chart-data="chartData" :options="options" />
-    </v-card>
+    <div v-if="isShowPfcPie">
+      <sub-header :title="$t('chart.pfcPie.name')" />
+      <v-card flat tile max-width="400" class="pa-4">
+        <chart-pie :chart-data="chartData" :options="options" />
+      </v-card>
+    </div>
 
     <div class="mb-3" />
 
