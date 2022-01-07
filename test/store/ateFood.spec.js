@@ -101,11 +101,17 @@ describe('actions', () => {
     actions.setCategoryTab({ dispatch, getters: gettersStub, rootGetters: rootGettersStub }, { ateFood: 'ateFood' })
     expect(dispatch).toHaveBeenCalledWith('category/setCurrentTab', { category }, { root: true })
   })
+
+  it('removedFood', () => {
+    const payload = { food: { id: 1 } }
+    actions.removedFood({ commit }, payload)
+    expect(commit).toHaveBeenCalledWith('removedFood', payload)
+  })
 })
 
 describe('mutations', () => {
   const state = () => ({
-    ateFoods,
+    ateFoods: [...ateFoods],
     currentId: 3
   })
   let _state
@@ -128,5 +134,11 @@ describe('mutations', () => {
   it('removeAteFood', () => {
     mutations.removeAteFood(_state, { index: uprmIndex })
     expect(_state.ateFoods.includes(removingAteFood)).toEqual(false)
+  })
+
+  it('removedFood', () => {
+    const payload = { food: { id: 1 } }
+    mutations.removedFood(_state, payload)
+    expect(_state.ateFoods).toEqual([ateFoods[1]])
   })
 })

@@ -4,7 +4,7 @@
       {{ $t(`model.body.${dataName}`) }}
     </div>
     <div class="text-h5 d-flex">
-      <span v-show="!isEditing">{{ data }}kg</span>
+      <span v-show="!isEditing">{{ data }}{{ $t(`unit.${dataName}`) }}</span>
       <v-form v-show="isEditing" ref="form" @submit.prevent>
         <v-text-field v-model.number="_updatingData" :rules="rules" @keyup.enter="finishEdit" />
       </v-form>

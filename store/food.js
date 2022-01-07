@@ -29,6 +29,8 @@ export const getters = {
   }
 }
 
+const observers = ['ateFood']
+
 export const actions = {
   sortFoods ({ commit }, payload) {
     commit('sortFoods', payload)
@@ -37,7 +39,8 @@ export const actions = {
     const index = getters.foodIndexById(payload.food.id)
     commit('updateFood', { food: payload.food, index })
   },
-  removeFood ({ commit, getters }, payload) {
+  removeFood ({ commit, getters, dispatch }, payload) {
+    dispatch('notifyObservers', payload)
     const index = getters.foodIndexById(payload.food.id)
     commit('removeFood', { index })
   },
@@ -46,6 +49,11 @@ export const actions = {
   },
   removedCategory ({ commit }, payload) {
     commit('removedCategory', payload)
+  },
+  notifyObservers ({ dispatch }, payload) {
+    observers.forEach((observer) => {
+      dispatch(`${observer}/removedFood`, payload, { root: true })
+    })
   }
 }
 
