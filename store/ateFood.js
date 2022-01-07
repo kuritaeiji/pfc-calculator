@@ -54,6 +54,9 @@ export const actions = {
     const food = getters.foodByAteFood(payload.ateFood)
     const category = rootGetters['food/categoryByFood'](food)
     dispatch('category/setCurrentTab', { category }, { root: true })
+  },
+  removedFood ({ commit }, payload) {
+    commit('removedFood', payload)
   }
 }
 
@@ -66,5 +69,8 @@ export const mutations = {
   },
   removeAteFood (state, { index }) {
     state.ateFoods.splice(index, 1)
+  },
+  removedFood (state, { food }) {
+    state.ateFoods = state.ateFoods.filter(ateFood => ateFood.foodId !== food.id)
   }
 }

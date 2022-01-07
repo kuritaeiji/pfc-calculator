@@ -63,8 +63,10 @@ describe('actions', () => {
 
   it('removeFood', () => {
     const removingFood = { ...foods[0] }
-    actions.removeFood({ commit, getters: gettersMock }, { food: removingFood })
+    const dispatch = jest.fn()
+    actions.removeFood({ commit, getters: gettersMock, dispatch }, { food: removingFood })
     expect(commit).toHaveBeenCalledWith('removeFood', { index: 0 })
+    expect(dispatch).toHaveBeenCalledWith('notifyObservers', { food: removingFood })
   })
 
   it('addFood', () => {
@@ -77,6 +79,13 @@ describe('actions', () => {
     const category = { id: 1 }
     actions.removedCategory({ commit }, { category })
     expect(commit).toHaveBeenCalledWith('removedCategory', { category })
+  })
+
+  it('notifyObservers', () => {
+    const dispatch = jest.fn()
+    const payload = { food: { id: 1 } }
+    actions.notifyObservers({ dispatch }, payload)
+    expect(dispatch).toHaveBeenCalledWith('ateFood/removedFood', payload, { root: true })
   })
 })
 
