@@ -12,22 +12,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import dayChart from '@/mixins/dayChart'
 
 export default {
-  data () {
-    return {
-      date: this.$utils.formatDate(new Date())
-    }
-  },
+  extends: dayChart,
   computed: {
     ...mapGetters('date', ['findDate', 'body']),
-    labels () {
-      const labels = []
-      for (let i = 0; i < 10; i++) {
-        labels.unshift(this.$moment(new Date(this.date)).subtract(i, 'd').format('YYYY-MM-DD'))
-      }
-      return labels
-    },
     bodyData () {
       return this.labels.map((dateString) => {
         const date = this.findDate(dateString)

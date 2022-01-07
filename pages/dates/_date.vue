@@ -79,10 +79,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import pfcChart from '@/mixins/pfcChart'
+import pfcPieChart from '~/mixins/pfcPieChart'
 
 export default {
-  extends: pfcChart,
+  extends: pfcPieChart,
   middleware: ['validDate', 'createDate'],
   asyncData ({ params, store }) {
     const date = store.getters['date/findDate'](params.date)

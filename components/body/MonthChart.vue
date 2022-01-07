@@ -12,23 +12,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import monthChart from '@/mixins/monthChart'
 
 export default {
-  data () {
-    return {
-      month: this.$utils.formatMonth(new Date())
-    }
-  },
+  extends: monthChart,
   computed: {
     ...mapGetters('date', ['monthAverageBody']),
-    labels () {
-      const labels = []
-      for (let i = 0; i < 10; i++) {
-        const monthString = this.$moment(new Date(this.month)).subtract(i, 'M').format('YYYY-MM')
-        labels.unshift(monthString)
-      }
-      return labels
-    },
     bodyData () {
       return this.labels.map(monthString => this.monthAverageBody(monthString))
     },
