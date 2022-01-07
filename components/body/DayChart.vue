@@ -1,29 +1,7 @@
 <template>
   <div>
-    <v-menu offset-y>
-      <template #activator="{ on, attrs }">
-        <v-btn
-          depressed
-          dark
-          color="cyan accent-4"
-          class="mb-4"
-          v-bind="attrs"
-          v-on="on"
-        >
-          <v-icon left>
-            mdi-calendar
-          </v-icon>
-          <span class="font-weight-bold">日付選択</span>
-        </v-btn>
-      </template>
-      <v-date-picker
-        v-model="date"
-        locale="ja-jp"
-        first-day-of-week="1"
-        :day-format="(d) => new Date(d).getDate()"
-        :max="today"
-      />
-    </v-menu>
+    <calendar-chart-day v-model="date" />
+
     <v-card flat tile max-width="1050" class="d-md-flex pa-4 mb-4">
       <chart-line :chart-data="chartWeightData" css-classes="body-chart" />
       <div class="d-block d-md-none mb-5" />
@@ -38,8 +16,7 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      date: this.$utils.formatDate(new Date()),
-      today: this.$utils.formatDate(new Date())
+      date: this.$utils.formatDate(new Date())
     }
   },
   computed: {

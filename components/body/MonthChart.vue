@@ -1,28 +1,6 @@
 <template>
   <div>
-    <v-menu offset-y>
-      <template #activator="{ on, attrs }">
-        <v-btn
-          depressed
-          dark
-          color="cyan accent-4"
-          class="mb-4"
-          v-bind="attrs"
-          v-on="on"
-        >
-          <v-icon left>
-            mdi-calendar
-          </v-icon>
-          <span class="font-weight-bold">月選択</span>
-        </v-btn>
-      </template>
-      <v-date-picker
-        v-model="month"
-        type="month"
-        locale="ja-jp"
-        :max="thisMonth"
-      />
-    </v-menu>
+    <calendar-chart-month v-model="month" />
 
     <v-card flat tile max-width="1050" class="d-md-flex pa-4 mb-4">
       <chart-line :chart-data="chartWeightData" css-classes="body-chart" />
@@ -38,8 +16,7 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      month: this.$utils.formatMonth(new Date()),
-      thisMonth: this.$utils.formatMonth(new Date())
+      month: this.$utils.formatMonth(new Date())
     }
   },
   computed: {
