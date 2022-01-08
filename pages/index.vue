@@ -85,7 +85,8 @@ export default {
   computed: {
     ...mapGetters('date', ['findDate', 'body', 'pfcByDate']),
     dates () {
-      return this.labels
+      const labels = this.labels
+      return labels.reverse()
     },
     bodyPfcs () {
       return this.dates.map((dateString) => {
