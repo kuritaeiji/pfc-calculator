@@ -45,9 +45,12 @@ export default {
           tooltips: {
             callbacks: {
               label (tooltipItem, data) {
+                // indexはx軸の日付インデックス
                 const index = tooltipItem.index
-                const value = data.datasets[0].data[index]
-                const label = data.datasets[0].label
+                // datasetIndexはpfcのindex
+                const datasetIndex = tooltipItem.datasetIndex
+                const value = data.datasets[datasetIndex].data[index]
+                const label = data.datasets[datasetIndex].label
                 return `${label}: ${value}${unit}`
               }
             }
