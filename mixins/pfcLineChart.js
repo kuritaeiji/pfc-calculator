@@ -4,7 +4,7 @@ export default {
       return new Error('implement pfcs method')
     },
     caloryData () {
-      return this.createData([this.createDataset(this.pfcs.map(pfc => pfc.calory), this.$t('model.date.calory'))])
+      return this.createData([this.createDataset(this.pfcs.map(pfc => pfc.calory), this.$t('model.date.calory'), 'blue')])
     },
     pfcData () {
       return this.createData([this.proteinDataset, this.fatDataset, this.carbonhydrateDataset])
@@ -29,32 +29,14 @@ export default {
     },
     createDataset () {
       return (data, label, color) => {
-        const borderColor = color ? { borderColor: color } : {}
         return {
           data,
           label,
           fill: false,
           tension: 0,
-          ...borderColor
-        }
-      }
-    },
-    createOptions () {
-      return (unit) => {
-        return {
-          tooltips: {
-            callbacks: {
-              label (tooltipItem, data) {
-                // indexはx軸の日付インデックス
-                const index = tooltipItem.index
-                // datasetIndexはpfcのindex
-                const datasetIndex = tooltipItem.datasetIndex
-                const value = data.datasets[datasetIndex].data[index]
-                const label = data.datasets[datasetIndex].label
-                return `${label}: ${value}${unit}`
-              }
-            }
-          }
+          borderColor: color,
+          pointBorderColor: color,
+          pointBackgroundColor: color
         }
       }
     }

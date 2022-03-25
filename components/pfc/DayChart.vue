@@ -5,7 +5,7 @@
     <v-card flat tile max-width="1050" class="d-md-flex pa-4 mb-4">
       <chart-line :chart-data="caloryData" :options="createOptions($t('unit.calory'))" css-classes="body-chart" />
       <div class="d-block d-md-none mb-5" />
-      <chart-line :chart-data="pfcData" :options="createOptions($t('unit.protein'))" css-classes="body-chart" />
+      <chart-line :chart-data="pfcData" :options="createOptions($t('unit.pfc'))" css-classes="body-chart" />
     </v-card>
   </div>
 </template>
@@ -14,9 +14,10 @@
 import { mapGetters } from 'vuex'
 import dayChart from '@/mixins/dayChart'
 import pfcLineChart from '~/mixins/pfcLineChart'
+import lineChart from '~/mixins/lineChart'
 
 export default {
-  mixins: [dayChart, pfcLineChart],
+  mixins: [dayChart, pfcLineChart, lineChart],
   computed: {
     ...mapGetters('date', ['pfcByDate', 'findDate']),
     pfcs () {

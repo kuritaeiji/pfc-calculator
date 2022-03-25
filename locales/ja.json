@@ -49,6 +49,7 @@
   },
   "unit": {
     "calory": "kcal",
+    "pfc": "g",
     "protein": "g",
     "fat": "g",
     "carbonhydrate": "g",

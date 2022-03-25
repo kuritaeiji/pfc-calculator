@@ -13,9 +13,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import monthChart from '@/mixins/monthChart'
+import lineChart from '~/mixins/lineChart'
 
 export default {
-  extends: monthChart,
+  mixins: [monthChart, lineChart],
   computed: {
     ...mapGetters('date', ['monthAverageBody']),
     bodyData () {
@@ -29,7 +30,10 @@ export default {
             label: this.$t('model.body.weight'),
             data: this.bodyData.map(body => body.weight),
             fill: false,
-            tension: 0
+            tension: 0,
+            borderColor: 'red',
+            pointBorderColor: 'red',
+            pointBackgroundColor: 'red'
           }
         ]
       }
@@ -42,7 +46,10 @@ export default {
             label: this.$t('model.body.fatPercentage'),
             data: this.bodyData.map(body => body.fatPercentage),
             fill: false,
-            tension: 0
+            tension: 0,
+            borderColor: 'blue',
+            pointBorderColor: 'blue',
+            pointBackgroundColor: 'blue'
           }
         ]
       }

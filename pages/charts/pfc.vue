@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <pfc-day-chart v-if="chartType === 'day'" />
-    <!-- <pfc-month-chart v-else /> -->
+    <pfc-month-chart v-else />
 
     <chart-radio-button v-model="chartType" :chart-types="chartTypes" />
   </v-container>
