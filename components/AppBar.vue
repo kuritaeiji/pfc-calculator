@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app flat>
+    <v-app-bar app flat absolute>
       <v-app-bar-nav-icon @click="drawer = !drawer" />
 
       <v-app-bar-title class="grey--text font-weight-bold text-h5 cp">
