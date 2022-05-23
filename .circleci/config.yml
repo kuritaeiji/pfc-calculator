@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  heroku: circleci/heroku@1.2.6
+  aws-s3: circleci/aws-s3@3.0
 
 jobs:
   build_and_test:
@@ -18,12 +18,21 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run: yarn test
+      - run: yarn generate
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - dist
   deploy:
-    executor: heroku/default
+    docker:
+      - image: 'cimg/python:3.6'
     steps:
-      - checkout
-      - heroku/install
-      - heroku/deploy-via-git
+      - attach_workspace:
+          at: dist
+      - aws-s3/sync:
+          from: dist
+          to: 's3://pfc-calculator.tk'
+      - run: aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths '/*'
 
 
 workflows:
@@ -40,4 +49,4 @@ workflows:
 # リストアキャッシュでyarn.lockを復元して現在のyarn.lockと変わらないならyarn installを省き、変化してた場合のみyarn installする
 # 最後にsave_cacheでyarn.lockをキャッシュして次回のジョブ実行時に差分比較できるようにする
 
-# herokuへデプロイするにはapi_keyとアプリ名をcircleciの環境変数に登録する必要がある。
+# AWS_ACCESS_KEY_ID, AWS_REGION, AWS_SECRET_ACCESS_KEY, DISTRIBUTION_IDを環境変数として設定する
