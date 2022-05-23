@@ -28,7 +28,7 @@ jobs:
       - image: 'cimg/python:3.6'
     steps:
       - attach_workspace:
-          at: dist
+          at: ~/project
       - aws-s3/sync:
           from: dist
           to: 's3://pfc-calculator.tk'
